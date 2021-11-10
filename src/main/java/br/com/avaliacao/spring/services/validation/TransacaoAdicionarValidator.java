@@ -31,9 +31,11 @@ public class TransacaoAdicionarValidator implements ConstraintValidator<Transaca
 		Optional<Fatura> fatura = faturaRepository.findById(transacaoAdicionarDTO.getFaturaId());		
 		if (fatura.isEmpty()) {
 			list.add(new FieldMessage("faturaId", "Objeto não encontrado! Id: " + transacaoAdicionarDTO.getFaturaId() + ", Tipo: " + Fatura.class.getName()));
+		} else {
+			// verificar aqui se possui limite
+			// fatura valor total + transacao valor <= cartão de credito limite
 		}
 		 
-		// verificar aqui se possui limite
 
 		for (FieldMessage e : list) {
 			context.disableDefaultConstraintViolation();

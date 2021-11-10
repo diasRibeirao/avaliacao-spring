@@ -45,6 +45,10 @@ public class CartaoCredito implements Serializable {
 	public CartaoCredito() {
 
 	}
+	
+	public CartaoCredito(Long id) {
+		this.id = id;
+	}
 
 	public CartaoCredito(Long id, Aluno aluno, String numero, String nome, Date vencimento, BigDecimal limite) {
 		this(aluno, numero, nome, vencimento, limite);

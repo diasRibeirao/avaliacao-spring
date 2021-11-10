@@ -116,7 +116,7 @@ public class Fatura implements Serializable {
 		BigDecimal valorTotal = new BigDecimal(0);
 
 		for (Transacao transacao : this.transacoes) {
-			valorTotal.add(transacao.getValor());
+			valorTotal = valorTotal.add(transacao.getValor());
 		}
 
 		return valorTotal;
