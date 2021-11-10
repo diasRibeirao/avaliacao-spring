@@ -1,7 +1,5 @@
 package br.com.avaliacao.spring.config;
 
-import java.text.ParseException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,7 +15,7 @@ public class TestConfig {
 	private DBService dbService;
 
 	@Bean
-	public boolean instantiateDatabase() throws ParseException {
+	public boolean instantiateDatabase() throws Exception {
 		dbService.instantiateTestDatabase();
 		return true;
 	}

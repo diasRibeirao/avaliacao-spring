@@ -1,7 +1,10 @@
 package br.com.avaliacao.spring.domain;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,9 +13,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "FATURA")
@@ -36,18 +42,38 @@ public class Fatura implements Serializable {
 	@Column(name = "DATA_VENCIMENTO")
 	private Date dataVencimento;
 
-	@Column(name = "VALOR_TOTAL")
-	private Float valorTotal;
-
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "DATA_PAGAMENTO")
 	private Date dataPagamento;
 
-	@Column(name = "VALOR_PAGO")
-	private Float valorPago;
+	@Column(name = "VALOR_PAGO", precision = 8, scale = 2)
+	private BigDecimal valorPago;
+
+	@JsonIgnore
+	@OneToMany(mappedBy = "fatura")
+	private List<Transacao> transacoes = new ArrayList<Transacao>();
 
 	public Fatura() {
 
+	}
+
+	public Fatura(Long id) {
+		this.id = id;
+	}
+
+	public Fatura(Long id, CartaoCredito cartaoCredito, Date dataFechamento, Date dataVencimento, Date dataPagamento,
+			BigDecimal valorPago) {
+		this(cartaoCredito, dataFechamento, dataVencimento, dataPagamento, valorPago);
+		this.id = id;
+	}
+
+	public Fatura(CartaoCredito cartaoCredito, Date dataFechamento, Date dataVencimento, Date dataPagamento,
+			BigDecimal valorPago) {
+		this.cartaoCredito = cartaoCredito;
+		this.dataFechamento = dataFechamento;
+		this.dataVencimento = dataVencimento;
+		this.dataPagamento = dataPagamento;
+		this.valorPago = valorPago;
 	}
 
 	public Long getId() {
@@ -82,12 +108,18 @@ public class Fatura implements Serializable {
 		this.dataVencimento = dataVencimento;
 	}
 
-	public Float getValorTotal() {
-		return valorTotal;
-	}
+	public BigDecimal getValorTotal() {
+		if (this.transacoes.isEmpty()) {
+			return new BigDecimal(0);
+		}
 
-	public void setValorTotal(Float valorTotal) {
-		this.valorTotal = valorTotal;
+		BigDecimal valorTotal = new BigDecimal(0);
+
+		for (Transacao transacao : this.transacoes) {
+			valorTotal.add(transacao.getValor());
+		}
+
+		return valorTotal;
 	}
 
 	public Date getDataPagamento() {
@@ -98,12 +130,20 @@ public class Fatura implements Serializable {
 		this.dataPagamento = dataPagamento;
 	}
 
-	public Float getValorPago() {
+	public BigDecimal getValorPago() {
 		return valorPago;
 	}
 
-	public void setValorPago(Float valorPago) {
+	public void setValorPago(BigDecimal valorPago) {
 		this.valorPago = valorPago;
+	}
+
+	public List<Transacao> getTransacoes() {
+		return transacoes;
+	}
+
+	public void setTransacoes(List<Transacao> transacoes) {
+		this.transacoes = transacoes;
 	}
 
 }

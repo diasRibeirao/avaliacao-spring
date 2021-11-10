@@ -1,6 +1,7 @@
 package br.com.avaliacao.spring.domain;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -35,13 +36,25 @@ public class Transacao implements Serializable {
 	@Column(name = "DATA")
 	private Date data;
 
-	@Column(name = "VALOR")
-	private Float valor;
+	@Column(name = "VALOR", precision = 8, scale = 2)
+	private BigDecimal valor;
 
 	public Transacao() {
-		super();
+
 	}
 
+	public Transacao(Long id, Fatura fatura, String descricao, Date data, BigDecimal valor) {
+		this(fatura, descricao, data, valor);
+		this.id = id;
+	}
+
+	public Transacao(Fatura fatura, String descricao, Date data, BigDecimal valor) {
+		this.fatura = fatura;
+		this.descricao = descricao;
+		this.data = data;
+		this.valor = valor;
+	}
+	
 	public Long getId() {
 		return id;
 	}
@@ -74,11 +87,11 @@ public class Transacao implements Serializable {
 		this.data = data;
 	}
 
-	public Float getValor() {
+	public BigDecimal getValor() {
 		return valor;
 	}
 
-	public void setValor(Float valor) {
+	public void setValor(BigDecimal valor) {
 		this.valor = valor;
 	}
 

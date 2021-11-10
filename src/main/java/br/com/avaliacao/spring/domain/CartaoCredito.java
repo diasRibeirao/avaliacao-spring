@@ -1,7 +1,8 @@
 package br.com.avaliacao.spring.domain;
 
 import java.io.Serializable;
-import java.time.YearMonth;
+import java.math.BigDecimal;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "CARTAO_CREDITO")
@@ -32,14 +35,28 @@ public class CartaoCredito implements Serializable {
 	@Column(name = "NOME")
 	private String nome;
 
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "VENCIMENTO")
-	private YearMonth vencimento;
+	private Date vencimento;
 
-	@Column(name = "LIMITE")
-	private Float limite;
+	@Column(name = "LIMITE", precision = 8, scale = 2)
+	private BigDecimal limite;
 
 	public CartaoCredito() {
 
+	}
+
+	public CartaoCredito(Long id, Aluno aluno, String numero, String nome, Date vencimento, BigDecimal limite) {
+		this(aluno, numero, nome, vencimento, limite);
+		this.id = id;
+	}
+
+	public CartaoCredito(Aluno aluno, String numero, String nome, Date vencimento, BigDecimal limite) {
+		this.aluno = aluno;
+		this.numero = numero;
+		this.nome = nome;
+		this.vencimento = vencimento;
+		this.limite = limite;
 	}
 
 	public Long getId() {
@@ -74,19 +91,19 @@ public class CartaoCredito implements Serializable {
 		this.nome = nome;
 	}
 
-	public YearMonth getVencimento() {
+	public Date getVencimento() {
 		return vencimento;
 	}
 
-	public void setVencimento(YearMonth vencimento) {
+	public void setVencimento(Date vencimento) {
 		this.vencimento = vencimento;
 	}
 
-	public Float getLimite() {
+	public BigDecimal getLimite() {
 		return limite;
 	}
 
-	public void setLimite(Float limite) {
+	public void setLimite(BigDecimal limite) {
 		this.limite = limite;
 	}
 
