@@ -3,35 +3,40 @@ package br.com.avaliacao.spring.domain.dto;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import javax.validation.constraints.NotNull;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-public class FaturaDTO {
+import br.com.avaliacao.spring.services.validation.FaturaAdicionar;
 
+@FaturaAdicionar
+public class FaturaAdicionarDTO {
+
+	@NotNull(message = "Preenchimento obrigatório!")
 	private Long cartaoCreditoId;
 
+	@NotNull(message = "Preenchimento obrigatório!")
 	@JsonFormat(pattern = "dd/MM/yyyy HH:mm")
 	private Date dataFechamento;
 
+	@NotNull(message = "Preenchimento obrigatório!")
 	@JsonFormat(pattern = "dd/MM/yyyy HH:mm")
 	private Date dataVencimento;
 
 	@JsonFormat(pattern = "dd/MM/yyyy HH:mm")
 	private Date dataPagamento;
 
-	private BigDecimal valorTotal;
-
 	private BigDecimal valorPago;
 
-	public FaturaDTO() {
+	public FaturaAdicionarDTO() {
 
 	}
 
-	public FaturaDTO(Long cartaoCreditoId, Date dataFechamento, Date dataVencimento, Date dataPagamento, BigDecimal valorTotal, BigDecimal valorPago) {
+	public FaturaAdicionarDTO(Long cartaoCreditoId, Date dataFechamento, Date dataVencimento, Date dataPagamento, BigDecimal valorPago) {
 		this.cartaoCreditoId = cartaoCreditoId;
 		this.dataFechamento = dataFechamento;
 		this.dataVencimento = dataVencimento;
 		this.dataPagamento = dataPagamento;
-		this.valorTotal = valorTotal;
 		this.valorPago = valorPago;
 	}
 
@@ -65,14 +70,6 @@ public class FaturaDTO {
 
 	public void setDataPagamento(Date dataPagamento) {
 		this.dataPagamento = dataPagamento;
-	}
-
-	public BigDecimal getValorTotal() {
-		return valorTotal;
-	}
-
-	public void setValorTotal(BigDecimal valorTotal) {
-		this.valorTotal = valorTotal;
 	}
 
 	public BigDecimal getValorPago() {

@@ -61,14 +61,12 @@ public class Fatura implements Serializable {
 		this.id = id;
 	}
 
-	public Fatura(Long id, CartaoCredito cartaoCredito, Date dataFechamento, Date dataVencimento, Date dataPagamento,
-			BigDecimal valorPago) {
+	public Fatura(Long id, CartaoCredito cartaoCredito, Date dataFechamento, Date dataVencimento, Date dataPagamento, BigDecimal valorPago) {
 		this(cartaoCredito, dataFechamento, dataVencimento, dataPagamento, valorPago);
 		this.id = id;
 	}
 
-	public Fatura(CartaoCredito cartaoCredito, Date dataFechamento, Date dataVencimento, Date dataPagamento,
-			BigDecimal valorPago) {
+	public Fatura(CartaoCredito cartaoCredito, Date dataFechamento, Date dataVencimento, Date dataPagamento, BigDecimal valorPago) {
 		this.cartaoCredito = cartaoCredito;
 		this.dataFechamento = dataFechamento;
 		this.dataVencimento = dataVencimento;

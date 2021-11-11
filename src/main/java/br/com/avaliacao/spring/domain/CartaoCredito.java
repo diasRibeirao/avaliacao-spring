@@ -29,7 +29,7 @@ public class CartaoCredito implements Serializable {
 	@JoinColumn(name = "ALUNO_ID")
 	private Aluno aluno;
 
-	@Column(name = "NUMERO")
+	@Column(name = "NUMERO", unique = true)
 	private String numero;
 
 	@Column(name = "NOME")

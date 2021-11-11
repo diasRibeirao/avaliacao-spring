@@ -47,9 +47,11 @@ public class FaturaService {
 		}
 	}
 
-	private void updateData(Fatura novoFatura, Fatura fatura) {		
-		//novoFatura.setFatura(fatura.getFatura());
-		//novoFatura.setDescricao(fatura.getDescricao());
-		//novoFatura.setValor(fatura.getValor());
+	private void updateData(Fatura novoFatura, Fatura fatura) {				
+		novoFatura.setCartaoCredito(fatura.getCartaoCredito());
+		novoFatura.setDataFechamento(fatura.getDataFechamento());
+		novoFatura.setDataVencimento(fatura.getDataVencimento());
+		novoFatura.setDataPagamento(fatura.getDataPagamento());
+		novoFatura.setValorPago(fatura.getValorPago());
 	}
 }

@@ -29,6 +29,10 @@ public class Aluno implements Serializable {
 
 	}
 
+	public Aluno(Long id) {
+		this.id = id;
+	}
+	
 	public Aluno(Long id, String matricula, String nome) {
 		this(matricula, nome);
 		this.id = id;

@@ -57,7 +57,7 @@ public class TransacaoResource {
 		return ResponseEntity.created(uri).build();
 	}
 
-	@ApiOperation(value = "Atualizar um aluno", tags = { "Transações"})
+	@ApiOperation(value = "Atualizar uma transação", tags = { "Transações"})
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<Void> update(@Valid @RequestBody TransacaoDTO objDto, @PathVariable Long id) {
 		Transacao obj = converter.ParseDTO(objDto);
