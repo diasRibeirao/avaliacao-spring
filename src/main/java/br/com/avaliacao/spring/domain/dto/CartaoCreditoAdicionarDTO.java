@@ -9,12 +9,9 @@ import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import br.com.avaliacao.spring.services.validation.CartaoCreditoAdicionar;
 
-@CartaoCreditoAdicionar
 public class CartaoCreditoAdicionarDTO {
 
-	@NotNull(message = "Preenchimento obrigatório!")
 	private long alunoId;
 
 	@NotEmpty(message = "Preenchimento obrigatório!")

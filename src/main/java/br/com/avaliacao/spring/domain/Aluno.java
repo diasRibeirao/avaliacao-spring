@@ -1,13 +1,18 @@
 package br.com.avaliacao.spring.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "ALUNO")
@@ -25,6 +30,10 @@ public class Aluno implements Serializable {
 	@Column(name = "NOME")
 	private String nome;
 
+	@JsonIgnore
+	@OneToMany(mappedBy = "aluno")
+	private List<CartaoCredito> cartoes = new ArrayList<CartaoCredito>();
+
 	public Aluno() {
 
 	}
@@ -32,7 +41,7 @@ public class Aluno implements Serializable {
 	public Aluno(Long id) {
 		this.id = id;
 	}
-	
+
 	public Aluno(Long id, String matricula, String nome) {
 		this(matricula, nome);
 		this.id = id;
@@ -65,6 +74,14 @@ public class Aluno implements Serializable {
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+
+	public List<CartaoCredito> getCartoes() {
+		return cartoes;
+	}
+
+	public void setCartoes(List<CartaoCredito> cartoes) {
+		this.cartoes = cartoes;
 	}
 
 }

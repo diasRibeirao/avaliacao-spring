@@ -27,6 +27,10 @@ public class CartaoCreditoService {
 		return cartaoCreditoRepository.findByNome(nome);
 	}
 	
+	public List<CartaoCredito> findByAlunoId(Long alunoId) {
+		return cartaoCreditoRepository.findByAlunoId(alunoId);
+	}
+	
 	public CartaoCredito findByNumero(String numero) {
 		Optional<CartaoCredito> obj = cartaoCreditoRepository.findByNumero(numero);
 		return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado! Número: " + numero + ", Tipo: " + CartaoCredito.class.getName()));

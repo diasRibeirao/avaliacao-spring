@@ -61,6 +61,13 @@ public class CartaoCreditoResource {
 		return ResponseEntity.ok().body(obj);
 	}
 
+	@ApiOperation(value = "Buscar cartões de crédito pelo id do aluno", tags = { "Cartões de Crédito" })
+	@RequestMapping(value = "/alunos/{alunoId}", method = RequestMethod.GET)
+	public ResponseEntity<List<CartaoCreditoDTO>> findByAlunoId(@PathVariable Long alunoId) {
+		List<CartaoCreditoDTO> list = converter.Parse(cartaoCreditoService.findByAlunoId(alunoId));
+		return ResponseEntity.ok().body(list);
+	}
+	
 	@ApiOperation(value = "Adicionar um cartão de crédito", tags = { "Cartões de Crédito" })
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<Void> insert(@Valid @RequestBody CartaoCreditoAdicionarDTO cartaoCreditoAdicionarDTO) {

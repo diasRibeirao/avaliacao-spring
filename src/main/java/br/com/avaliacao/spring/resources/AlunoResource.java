@@ -55,17 +55,17 @@ public class AlunoResource {
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(aluno.getId()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
-	
-	@ApiOperation(value = "Atualizar um aluno", tags = { "Alunos"})
+
+	@ApiOperation(value = "Atualizar um aluno", tags = { "Alunos" })
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<Void> update(@Valid @RequestBody AlunoDTO objDto, @PathVariable Long id) {
 		Aluno obj = converter.Parse(objDto);
-		obj.setId(id); 
+		obj.setId(id);
 		obj = alunoService.update(obj);
 		return ResponseEntity.noContent().build();
-	}	
-	
-	@ApiOperation(value = "Deletar um aluno", tags = { "Alunos"})
+	}
+
+	@ApiOperation(value = "Deletar um aluno", tags = { "Alunos" })
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Void> delete(@PathVariable Long id) {
 		alunoService.delete(id);
