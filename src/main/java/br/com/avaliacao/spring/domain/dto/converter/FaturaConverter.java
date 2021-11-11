@@ -45,7 +45,7 @@ public class FaturaConverter {
 		if (origin == null)
 			return null;
 
-		return new FaturaDTO(origin.getCartaoCredito().getId(), origin.getDataFechamento(), origin.getDataVencimento(), origin.getDataPagamento(), origin.getValorTotal(), origin.getValorPago());
+		return new FaturaDTO(origin.getId(), origin.getCartaoCredito().getId(), origin.getDataFechamento(), origin.getDataVencimento(), origin.getDataPagamento(), origin.getValorTotal(), origin.getValorPago());
 	}
 
 	public List<FaturaDTO> Parse(List<Fatura> origin) {

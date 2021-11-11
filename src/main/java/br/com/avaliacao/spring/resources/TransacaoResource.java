@@ -46,7 +46,13 @@ public class TransacaoResource {
 		TransacaoDTO obj = converter.Parse(transacaoService.find(id));
 		return ResponseEntity.ok().body(obj);
 	}
-
+	
+	@ApiOperation(value = "Buscar transações pelo id da fatura", tags = { "Transações" })
+	@RequestMapping(value = "/faturas/{faturaId}", method = RequestMethod.GET)
+	public ResponseEntity<List<TransacaoDTO>> findByFaturaId(@PathVariable Long faturaId) {
+		List<TransacaoDTO> list = converter.Parse(transacaoService.findByFaturaId(faturaId));
+		return ResponseEntity.ok().body(list);
+	}
 
 	@ApiOperation(value = "Adicionar uma transação", tags = { "Transações" })
 	@RequestMapping(method = RequestMethod.POST)

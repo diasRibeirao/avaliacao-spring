@@ -7,6 +7,8 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class FaturaDTO {
 
+	private Long id;
+
 	private Long cartaoCreditoId;
 
 	@JsonFormat(pattern = "dd/MM/yyyy HH:mm")
@@ -26,13 +28,22 @@ public class FaturaDTO {
 
 	}
 
-	public FaturaDTO(Long cartaoCreditoId, Date dataFechamento, Date dataVencimento, Date dataPagamento, BigDecimal valorTotal, BigDecimal valorPago) {
+	public FaturaDTO(Long id, Long cartaoCreditoId, Date dataFechamento, Date dataVencimento, Date dataPagamento, BigDecimal valorTotal, BigDecimal valorPago) {
+		this.id = id;
 		this.cartaoCreditoId = cartaoCreditoId;
 		this.dataFechamento = dataFechamento;
 		this.dataVencimento = dataVencimento;
 		this.dataPagamento = dataPagamento;
 		this.valorTotal = valorTotal;
 		this.valorPago = valorPago;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public Long getCartaoCreditoId() {

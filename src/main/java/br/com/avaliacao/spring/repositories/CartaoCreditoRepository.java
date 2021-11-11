@@ -22,7 +22,6 @@ public interface CartaoCreditoRepository extends JpaRepository<CartaoCredito, Lo
 	List<CartaoCredito> findByNome(String nome);
 
 	@Transactional(readOnly = true)	
-	//@Query("SELECT obj FROM CartaoCredito obj INNER JOIN obj.aluno a WHERE a.id = :alunoId ORDER BY obj.id")
 	@Query("SELECT obj FROM Aluno a INNER JOIN a.cartoes obj WHERE a.id = :alunoId ORDER BY obj.id")
 	List<CartaoCredito> findByAlunoId(@Param("alunoId") Long alunoId);
 }
