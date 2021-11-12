@@ -1,7 +1,7 @@
 package br.com.avaliacao.spring.domain.dto;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.YearMonth;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -15,8 +15,8 @@ public class CartaoCreditoDTO {
 
 	private String nome;
 
-	@JsonFormat(pattern = "dd/MM/yyyy HH:mm")
-	private Date vencimento;
+	@JsonFormat(pattern = "MM/yyyy")
+	private YearMonth vencimento;
 
 	private BigDecimal limite;
 
@@ -24,7 +24,7 @@ public class CartaoCreditoDTO {
 
 	}
 
-	public CartaoCreditoDTO(Long id, long alunoId, String numero, String nome, Date vencimento, BigDecimal limite) {
+	public CartaoCreditoDTO(Long id, long alunoId, String numero, String nome, YearMonth vencimento, BigDecimal limite) {
 		this.id = id;
 		this.alunoId = alunoId;
 		this.numero = numero;
@@ -65,11 +65,11 @@ public class CartaoCreditoDTO {
 		this.nome = nome;
 	}
 
-	public Date getVencimento() {
+	public YearMonth getVencimento() {
 		return vencimento;
 	}
 
-	public void setVencimento(Date vencimento) {
+	public void setVencimento(YearMonth vencimento) {
 		this.vencimento = vencimento;
 	}
 

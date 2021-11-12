@@ -1,7 +1,10 @@
 package br.com.avaliacao.spring.domain.dto;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.YearMonth;
+
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -12,20 +15,24 @@ public class CartaoCreditoAtualizarDTO {
 
 	private long alunoId;
 
+	@Size(min = 16, max = 16, message = "O nome deve possuir {max} caracteres!")
 	private String numero;
 
+	@Size(min = 2, max = 120, message = "O nome deve possuir entre {min} e {max} caracteres!")
 	private String nome;
 
-	@JsonFormat(pattern = "dd/MM/yyyy HH:mm")
-	private Date vencimento;
+	@NotNull(message = "Preenchimento obrigatório!")
+	@JsonFormat(pattern = "MM/yyyy")
+	private YearMonth vencimento;
 
+	@NotNull(message = "Preenchimento obrigatório!")
 	private BigDecimal limite;
 	
 	public CartaoCreditoAtualizarDTO() {
 		
 	}
 
-	public CartaoCreditoAtualizarDTO(long alunoId, String numero, String nome, Date vencimento, BigDecimal limite) {
+	public CartaoCreditoAtualizarDTO(long alunoId, String numero, String nome, YearMonth vencimento, BigDecimal limite) {
 		this.alunoId = alunoId;
 		this.numero = numero;
 		this.nome = nome;
@@ -57,11 +64,11 @@ public class CartaoCreditoAtualizarDTO {
 		this.nome = nome;
 	}
 
-	public Date getVencimento() {
+	public YearMonth getVencimento() {
 		return vencimento;
 	}
 
-	public void setVencimento(Date vencimento) {
+	public void setVencimento(YearMonth vencimento) {
 		this.vencimento = vencimento;
 	}
 

@@ -3,6 +3,8 @@ package br.com.avaliacao.spring.services.db;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.math.BigDecimal;
+import java.time.YearMonth;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -135,7 +137,7 @@ public class DBService {
 		return retorno;
 	}
 	
-	private Date getVencimento() {
+	private YearMonth getVencimento() {
 		Calendar calendar = Calendar.getInstance();
 		calendar.set(Calendar.MILLISECOND, 0);
         calendar.set(Calendar.SECOND, 0);
@@ -147,8 +149,9 @@ public class DBService {
         calendar.set(Calendar.DAY_OF_MONTH, ThreadLocalRandom.current().nextInt(1, 30));
         calendar.set(Calendar.MONTH, ThreadLocalRandom.current().nextInt(0, 11));
         calendar.set(Calendar.YEAR, ThreadLocalRandom.current().nextInt(2025, 2035));
-		
-		return calendar.getTime();
+        		
+		return YearMonth.from(calendar.toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+		 
 	}
 	
 	private Date getData(int dia) {

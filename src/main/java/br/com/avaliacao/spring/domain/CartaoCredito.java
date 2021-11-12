@@ -2,8 +2,8 @@ package br.com.avaliacao.spring.domain;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.YearMonth;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -15,8 +15,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -40,9 +38,8 @@ public class CartaoCredito implements Serializable {
 	@Column(name = "NOME")
 	private String nome;
 
-	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "VENCIMENTO")
-	private Date vencimento;
+	private YearMonth vencimento;
 
 	@Column(name = "LIMITE", precision = 8, scale = 2)
 	private BigDecimal limite;
@@ -59,12 +56,12 @@ public class CartaoCredito implements Serializable {
 		this.id = id;
 	}
 
-	public CartaoCredito(Long id, Aluno aluno, String numero, String nome, Date vencimento, BigDecimal limite) {
+	public CartaoCredito(Long id, Aluno aluno, String numero, String nome, YearMonth vencimento, BigDecimal limite) {
 		this(aluno, numero, nome, vencimento, limite);
 		this.id = id;
 	}
 
-	public CartaoCredito(Aluno aluno, String numero, String nome, Date vencimento, BigDecimal limite) {
+	public CartaoCredito(Aluno aluno, String numero, String nome, YearMonth vencimento, BigDecimal limite) {
 		this.aluno = aluno;
 		this.numero = numero;
 		this.nome = nome;
@@ -104,11 +101,11 @@ public class CartaoCredito implements Serializable {
 		this.nome = nome;
 	}
 
-	public Date getVencimento() {
+	public YearMonth getVencimento() {
 		return vencimento;
 	}
 
-	public void setVencimento(Date vencimento) {
+	public void setVencimento(YearMonth vencimento) {
 		this.vencimento = vencimento;
 	}
 
