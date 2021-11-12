@@ -5,9 +5,10 @@ import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-public class FaturaDTO {
+import br.com.avaliacao.spring.services.validation.FaturaAtualizar;
 
-	private Long id;
+@FaturaAtualizar
+public class FaturaAtualizarDTO {
 
 	private Long cartaoCreditoId;
 
@@ -20,34 +21,18 @@ public class FaturaDTO {
 	@JsonFormat(pattern = "dd/MM/yyyy HH:mm")
 	private Date dataPagamento;
 
-	private BigDecimal valorTotal;
-
 	private BigDecimal valorPago;
 
-	private Boolean vencida;
-
-	public FaturaDTO() {
+	public FaturaAtualizarDTO() {
 
 	}
 
-	public FaturaDTO(Long id, Long cartaoCreditoId, Date dataFechamento, Date dataVencimento,
-			Date dataPagamento, BigDecimal valorTotal, BigDecimal valorPago, Boolean vencida) {
-		this.id = id;
+	public FaturaAtualizarDTO(Long cartaoCreditoId, Date dataFechamento, Date dataVencimento, Date dataPagamento, BigDecimal valorPago) {
 		this.cartaoCreditoId = cartaoCreditoId;
 		this.dataFechamento = dataFechamento;
 		this.dataVencimento = dataVencimento;
 		this.dataPagamento = dataPagamento;
-		this.valorTotal = valorTotal;
 		this.valorPago = valorPago;
-		this.vencida = vencida;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
 	}
 
 	public Long getCartaoCreditoId() {
@@ -82,28 +67,12 @@ public class FaturaDTO {
 		this.dataPagamento = dataPagamento;
 	}
 
-	public BigDecimal getValorTotal() {
-		return valorTotal;
-	}
-
-	public void setValorTotal(BigDecimal valorTotal) {
-		this.valorTotal = valorTotal;
-	}
-
 	public BigDecimal getValorPago() {
 		return valorPago;
 	}
 
 	public void setValorPago(BigDecimal valorPago) {
 		this.valorPago = valorPago;
-	}
-
-	public Boolean getVencida() {
-		return vencida;
-	}
-
-	public void setVencida(Boolean vencida) {
-		this.vencida = vencida;
 	}
 
 }

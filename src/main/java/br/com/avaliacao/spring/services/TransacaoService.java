@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
-import br.com.avaliacao.spring.domain.CartaoCredito;
 import br.com.avaliacao.spring.domain.Transacao;
 import br.com.avaliacao.spring.repositories.TransacaoRepository;
 import br.com.avaliacao.spring.services.exceptions.DataIntegrityException;

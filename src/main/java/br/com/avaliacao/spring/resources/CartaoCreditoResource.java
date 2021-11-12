@@ -16,6 +16,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.avaliacao.spring.domain.CartaoCredito;
 import br.com.avaliacao.spring.domain.dto.CartaoCreditoAdicionarDTO;
+import br.com.avaliacao.spring.domain.dto.CartaoCreditoAtualizarDTO;
 import br.com.avaliacao.spring.domain.dto.CartaoCreditoDTO;
 import br.com.avaliacao.spring.domain.dto.converter.CartaoCreditoConverter;
 import br.com.avaliacao.spring.services.CartaoCreditoService;
@@ -46,28 +47,28 @@ public class CartaoCreditoResource {
 		CartaoCreditoDTO obj = converter.Parse(cartaoCreditoService.find(id));
 		return ResponseEntity.ok().body(obj);
 	}
-	
+
 	@ApiOperation(value = "Buscar o cartão de crédito pelo nome", tags = { "Cartões de Crédito" })
 	@RequestMapping(value = "/nome/{nome}", method = RequestMethod.GET)
 	public ResponseEntity<List<CartaoCreditoDTO>> findByNome(@PathVariable String nome) {
 		List<CartaoCreditoDTO> list = converter.Parse(cartaoCreditoService.findByNome(nome));
 		return ResponseEntity.ok().body(list);
 	}
-	
+
 	@ApiOperation(value = "Buscar o cartão de crédito pelo número", tags = { "Cartões de Crédito" })
 	@RequestMapping(value = "/numero/{numero}", method = RequestMethod.GET)
 	public ResponseEntity<CartaoCreditoDTO> findByNumero(@PathVariable String numero) {
 		CartaoCreditoDTO obj = converter.Parse(cartaoCreditoService.findByNumero(numero));
 		return ResponseEntity.ok().body(obj);
 	}
-	
+
 	@ApiOperation(value = "Buscar cartões de crédito pelo id do aluno", tags = { "Cartões de Crédito" })
 	@RequestMapping(value = "/alunos/{alunoId}", method = RequestMethod.GET)
 	public ResponseEntity<List<CartaoCreditoDTO>> findByAlunoId(@PathVariable Long alunoId) {
 		List<CartaoCreditoDTO> list = converter.Parse(cartaoCreditoService.findByAlunoId(alunoId));
 		return ResponseEntity.ok().body(list);
 	}
-	
+
 	@ApiOperation(value = "Adicionar um cartão de crédito", tags = { "Cartões de Crédito" })
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<Void> insert(@Valid @RequestBody CartaoCreditoAdicionarDTO cartaoCreditoAdicionarDTO) {
@@ -77,16 +78,16 @@ public class CartaoCreditoResource {
 		return ResponseEntity.created(uri).build();
 	}
 
-	@ApiOperation(value = "Atualizar um cartão de crédito", tags = { "Cartões de Crédito"})
+	@ApiOperation(value = "Atualizar um cartão de crédito", tags = { "Cartões de Crédito" })
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<Void> update(@Valid @RequestBody CartaoCreditoDTO objDto, @PathVariable Long id) {
-		CartaoCredito obj = converter.ParseDTO(objDto);
-		obj.setId(id); 
+	public ResponseEntity<Void> update(@Valid @RequestBody CartaoCreditoAtualizarDTO objDto, @PathVariable Long id) {
+		CartaoCredito obj = converter.ParseAtualizarDTO(objDto);
+		obj.setId(id);
 		obj = cartaoCreditoService.update(obj);
 		return ResponseEntity.noContent().build();
-	}	
+	}
 
-	@ApiOperation(value = "Deletar um cartão de crédito", tags = { "Cartões de Crédito"})
+	@ApiOperation(value = "Deletar um cartão de crédito", tags = { "Cartões de Crédito" })
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Void> delete(@PathVariable Long id) {
 		cartaoCreditoService.delete(id);

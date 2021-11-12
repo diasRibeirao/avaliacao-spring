@@ -5,9 +5,10 @@ import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-public class CartaoCreditoDTO {
+import br.com.avaliacao.spring.services.validation.CartaoCreditoAtualizar;
 
-	private Long id;
+@CartaoCreditoAtualizar
+public class CartaoCreditoAtualizarDTO {
 
 	private long alunoId;
 
@@ -19,26 +20,17 @@ public class CartaoCreditoDTO {
 	private Date vencimento;
 
 	private BigDecimal limite;
-
-	public CartaoCreditoDTO() {
-
+	
+	public CartaoCreditoAtualizarDTO() {
+		
 	}
 
-	public CartaoCreditoDTO(Long id, long alunoId, String numero, String nome, Date vencimento, BigDecimal limite) {
-		this.id = id;
+	public CartaoCreditoAtualizarDTO(long alunoId, String numero, String nome, Date vencimento, BigDecimal limite) {
 		this.alunoId = alunoId;
 		this.numero = numero;
 		this.nome = nome;
 		this.vencimento = vencimento;
 		this.limite = limite;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
 	}
 
 	public long getAlunoId() {

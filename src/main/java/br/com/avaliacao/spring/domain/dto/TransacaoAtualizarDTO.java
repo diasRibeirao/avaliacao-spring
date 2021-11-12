@@ -3,12 +3,16 @@ package br.com.avaliacao.spring.domain.dto;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import javax.validation.constraints.NotNull;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-public class TransacaoDTO {
+import br.com.avaliacao.spring.services.validation.TransacaoAtualizar;
 
-	private Long id;
+@TransacaoAtualizar
+public class TransacaoAtualizarDTO {
 
+	@NotNull(message = "Preenchimento obrigatório!")
 	private Long faturaId;
 
 	private String descricao;
@@ -18,24 +22,15 @@ public class TransacaoDTO {
 
 	private BigDecimal valor;
 
-	public TransacaoDTO() {
+	public TransacaoAtualizarDTO() {
 
 	}
 
-	public TransacaoDTO(Long id, Long faturaId, String descricao, Date data, BigDecimal valor) {
-		this.id = id;
+	public TransacaoAtualizarDTO(Long faturaId, String descricao, Date data, BigDecimal valor) {
 		this.faturaId = faturaId;
 		this.descricao = descricao;
 		this.data = data;
 		this.valor = valor;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
 	}
 
 	public Long getFaturaId() {

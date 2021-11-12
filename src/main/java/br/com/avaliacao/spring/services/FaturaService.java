@@ -26,6 +26,10 @@ public class FaturaService {
 	public List<Fatura> findAll() {
 		return faturaRepository.findAll();
 	}
+	
+	public List<Fatura> findByCartaoCreditoId(Long cartaoCreditoId) {
+		return faturaRepository.findByCartaoCreditoId(cartaoCreditoId);
+	}
 
 	public Fatura insert(Fatura fatura) {
 		fatura.setId(null);
@@ -54,4 +58,6 @@ public class FaturaService {
 		novoFatura.setDataPagamento(fatura.getDataPagamento());
 		novoFatura.setValorPago(fatura.getValorPago());
 	}
+
+	
 }

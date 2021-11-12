@@ -16,6 +16,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.avaliacao.spring.domain.Transacao;
 import br.com.avaliacao.spring.domain.dto.TransacaoAdicionarDTO;
+import br.com.avaliacao.spring.domain.dto.TransacaoAtualizarDTO;
 import br.com.avaliacao.spring.domain.dto.TransacaoDTO;
 import br.com.avaliacao.spring.domain.dto.converter.TransacaoConverter;
 import br.com.avaliacao.spring.services.TransacaoService;
@@ -65,8 +66,8 @@ public class TransacaoResource {
 
 	@ApiOperation(value = "Atualizar uma transação", tags = { "Transações"})
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<Void> update(@Valid @RequestBody TransacaoDTO objDto, @PathVariable Long id) {
-		Transacao obj = converter.ParseDTO(objDto);
+	public ResponseEntity<Void> update(@Valid @RequestBody TransacaoAtualizarDTO objDto, @PathVariable Long id) {
+		Transacao obj = converter.ParseAtualizarDTO(objDto);
 		obj.setId(id); 
 		obj = transacaoService.update(obj);
 		return ResponseEntity.noContent().build();

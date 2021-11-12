@@ -38,7 +38,7 @@ public class Transacao implements Serializable {
 
 	@Column(name = "VALOR", precision = 8, scale = 2)
 	private BigDecimal valor;
-
+	
 	public Transacao() {
 
 	}

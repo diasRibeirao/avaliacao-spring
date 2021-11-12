@@ -7,36 +7,51 @@ import org.springframework.stereotype.Service;
 
 import br.com.avaliacao.spring.domain.Aluno;
 import br.com.avaliacao.spring.domain.dto.AlunoAdicionarDTO;
+import br.com.avaliacao.spring.domain.dto.AlunoAtualizarDTO;
 import br.com.avaliacao.spring.domain.dto.AlunoDTO;
 
 @Service
 public class AlunoConverter {
 
-	public Aluno ParseAdicionar(AlunoAdicionarDTO origin) {
+	public Aluno ParseAdicionarDTO(AlunoAdicionarDTO origin) {
 		if (origin == null)
 			return null;
 
 		return new Aluno(origin.getMatricula(), origin.getNome());
 	}
 
-	public List<Aluno> ParseAdicionar(List<AlunoAdicionarDTO> origin) {
-		if (origin == null)
-			return null;
-		
-		return origin.stream().map(obj -> ParseAdicionar(obj)).collect(Collectors.toList());
-	}
-	
-	public Aluno Parse(AlunoDTO origin) {
+	public List<Aluno> ParseAdicionarDTO(List<AlunoAdicionarDTO> origin) {
 		if (origin == null)
 			return null;
 
-		return new Aluno(origin.getId(), origin.getMatricula(), origin.getNome());
+		return origin.stream().map(obj -> ParseAdicionarDTO(obj)).collect(Collectors.toList());
 	}
 
-	public List<Aluno> Parse2(List<AlunoDTO> origin) {
+	public Aluno ParseAtualizarDTO(AlunoAtualizarDTO origin) {
 		if (origin == null)
 			return null;
-		
+
+		return new Aluno(origin.getMatricula(), origin.getNome());
+	}
+
+	public List<Aluno> ParseAtualizarDTO(List<AlunoAtualizarDTO> origin) {
+		if (origin == null)
+			return null;
+
+		return origin.stream().map(obj -> ParseAtualizarDTO(obj)).collect(Collectors.toList());
+	}
+
+	public AlunoDTO Parse(Aluno origin) {
+		if (origin == null)
+			return null;
+
+		return new AlunoDTO(origin.getId(), origin.getMatricula(), origin.getNome());
+	}
+
+	public List<AlunoDTO> Parse(List<Aluno> origin) {
+		if (origin == null)
+			return null;
+
 		return origin.stream().map(obj -> Parse(obj)).collect(Collectors.toList());
 	}
 

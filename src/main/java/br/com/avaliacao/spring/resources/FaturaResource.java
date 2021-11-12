@@ -17,6 +17,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import br.com.avaliacao.spring.domain.Fatura;
 import br.com.avaliacao.spring.domain.dto.FaturaAdicionarDTO;
 import br.com.avaliacao.spring.domain.dto.FaturaDTO;
+import br.com.avaliacao.spring.domain.dto.FaturaAtualizarDTO;
 import br.com.avaliacao.spring.domain.dto.converter.FaturaConverter;
 import br.com.avaliacao.spring.services.FaturaService;
 import io.swagger.annotations.Api;
@@ -46,7 +47,13 @@ public class FaturaResource {
 		FaturaDTO obj = converter.Parse(faturaService.find(id));
 		return ResponseEntity.ok().body(obj);
 	}
-
+	
+	@ApiOperation(value = "Buscar faturas pelo id do cartão de drédito", tags = { "Faturas" })
+	@RequestMapping(value = "/cartoes/{cartaoCreditoId}", method = RequestMethod.GET)
+	public ResponseEntity<List<FaturaDTO>> findByCartaoCreditoId(@PathVariable Long cartaoCreditoId) {
+		List<FaturaDTO> list = converter.Parse(faturaService.findByCartaoCreditoId(cartaoCreditoId));
+		return ResponseEntity.ok().body(list);
+	}
 
 	@ApiOperation(value = "Adicionar uma fatura", tags = { "Faturas" })
 	@RequestMapping(method = RequestMethod.POST)
@@ -59,8 +66,8 @@ public class FaturaResource {
 	
 	@ApiOperation(value = "Atualizar uma fatura", tags = { "Faturas"})
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<Void> update(@Valid @RequestBody FaturaDTO objDto, @PathVariable Long id) {
-		Fatura obj = converter.ParseDTO(objDto);
+	public ResponseEntity<Void> update(@Valid @RequestBody FaturaAtualizarDTO objDto, @PathVariable Long id) {
+		Fatura obj = converter.ParseFaturaAtualizarDTO(objDto);
 		obj.setId(id); 
 		obj = faturaService.update(obj);
 		return ResponseEntity.noContent().build();

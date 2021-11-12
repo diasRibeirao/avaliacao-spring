@@ -3,6 +3,7 @@ package br.com.avaliacao.spring.domain;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -142,6 +143,14 @@ public class Fatura implements Serializable {
 
 	public void setTransacoes(List<Transacao> transacoes) {
 		this.transacoes = transacoes;
+	}
+	
+	public Boolean isVencida() {
+		if (this.dataPagamento != null) {
+			return false;
+		}
+
+		return Calendar.getInstance().getTime().after(this.dataVencimento);
 	}
 
 }
