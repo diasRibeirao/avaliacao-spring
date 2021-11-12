@@ -43,7 +43,7 @@ public class CartaoCreditoAdicionarValidator implements ConstraintValidator<Cart
 		
 		if (!StringUtils.isBlank(cartaoCreditoAdicionarDTO.getNumero())) {
 			Optional<CartaoCredito> aux = cartaoCreditoRepository.findByNumero(cartaoCreditoAdicionarDTO.getNumero());
-			if (aux.isEmpty()) {
+			if (aux.isPresent()) {
 				list.add(new FieldMessage("numero", "Número já existente!"));
 			}		 
 		}

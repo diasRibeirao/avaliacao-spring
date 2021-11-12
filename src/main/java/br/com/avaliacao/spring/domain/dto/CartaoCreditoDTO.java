@@ -15,22 +15,25 @@ public class CartaoCreditoDTO {
 
 	private String nome;
 
-	@JsonFormat(pattern = "MM/yyyy")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM/yyyy")
 	private YearMonth vencimento;
 
 	private BigDecimal limite;
+	
+	private String codigoSeguranca;
 
 	public CartaoCreditoDTO() {
 
 	}
 
-	public CartaoCreditoDTO(Long id, long alunoId, String numero, String nome, YearMonth vencimento, BigDecimal limite) {
+	public CartaoCreditoDTO(Long id, long alunoId, String numero, String nome, YearMonth vencimento, BigDecimal limite, String codigoSeguranca) {
 		this.id = id;
 		this.alunoId = alunoId;
 		this.numero = numero;
 		this.nome = nome;
 		this.vencimento = vencimento;
 		this.limite = limite;
+		this.codigoSeguranca = codigoSeguranca;
 	}
 
 	public Long getId() {
@@ -81,4 +84,13 @@ public class CartaoCreditoDTO {
 		this.limite = limite;
 	}
 
+	public String getCodigoSeguranca() {
+		return codigoSeguranca;
+	}
+
+	public void setCodigoSeguranca(String codigoSeguranca) {
+		this.codigoSeguranca = codigoSeguranca;
+	}
+
+	
 }

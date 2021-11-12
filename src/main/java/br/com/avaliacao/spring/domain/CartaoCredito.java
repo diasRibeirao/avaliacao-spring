@@ -43,6 +43,9 @@ public class CartaoCredito implements Serializable {
 
 	@Column(name = "LIMITE", precision = 8, scale = 2)
 	private BigDecimal limite;
+	
+	@Column(name = "CODIGO_SEGURANCA")
+	private String codigoSeguranca;
 
 	@JsonIgnore
 	@OneToMany(mappedBy = "cartaoCredito")
@@ -56,17 +59,18 @@ public class CartaoCredito implements Serializable {
 		this.id = id;
 	}
 
-	public CartaoCredito(Long id, Aluno aluno, String numero, String nome, YearMonth vencimento, BigDecimal limite) {
-		this(aluno, numero, nome, vencimento, limite);
+	public CartaoCredito(Long id, Aluno aluno, String numero, String nome, YearMonth vencimento, BigDecimal limite, String codigoSeguranca) {
+		this(aluno, numero, nome, vencimento, limite, codigoSeguranca);
 		this.id = id;
 	}
 
-	public CartaoCredito(Aluno aluno, String numero, String nome, YearMonth vencimento, BigDecimal limite) {
+	public CartaoCredito(Aluno aluno, String numero, String nome, YearMonth vencimento, BigDecimal limite, String codigoSeguranca) {
 		this.aluno = aluno;
 		this.numero = numero;
 		this.nome = nome;
 		this.vencimento = vencimento;
 		this.limite = limite;
+		this.codigoSeguranca = codigoSeguranca;
 	}
 
 	public Long getId() {
@@ -123,6 +127,14 @@ public class CartaoCredito implements Serializable {
 
 	public void setFaturas(List<Fatura> faturas) {
 		this.faturas = faturas;
+	}
+
+	public String getCodigoSeguranca() {
+		return codigoSeguranca;
+	}
+
+	public void setCodigoSeguranca(String codigoSeguranca) {
+		this.codigoSeguranca = codigoSeguranca;
 	}
 
 }

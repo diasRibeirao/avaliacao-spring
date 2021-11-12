@@ -83,13 +83,14 @@ public class DBService {
 			for (int j = 0; j < 4; j++) {
 				numero += String.format("%04d", ThreadLocalRandom.current().nextInt(10000));
 			}
-			
+						
 			retorno.add(new CartaoCredito(
 					aluno, 
 					numero, 
 					aluno.getNome(), 
 					getVencimento(), 
-					new BigDecimal(ThreadLocalRandom.current().nextFloat() * 10000)
+					new BigDecimal(ThreadLocalRandom.current().nextFloat() * 10000),
+					 String.format("%03d", ThreadLocalRandom.current().nextInt(1000))
 			));
 		}
 		

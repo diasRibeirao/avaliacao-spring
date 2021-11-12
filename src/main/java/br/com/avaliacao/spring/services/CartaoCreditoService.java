@@ -8,7 +8,10 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import br.com.avaliacao.spring.domain.CartaoCredito;
+import br.com.avaliacao.spring.domain.dto.AutorizadoraDTO;
+import br.com.avaliacao.spring.domain.dto.AutorizadoraRetornoDTO;
 import br.com.avaliacao.spring.repositories.CartaoCreditoRepository;
+import br.com.avaliacao.spring.services.exceptions.AutorizadoraException;
 import br.com.avaliacao.spring.services.exceptions.DataIntegrityException;
 import br.com.avaliacao.spring.services.exceptions.ObjectNotFoundException;
 
@@ -59,6 +62,17 @@ public class CartaoCreditoService {
 			throw new DataIntegrityException("Não é possível excluir");
 		}
 	}
+	
+	public AutorizadoraRetornoDTO autorizar(AutorizadoraDTO dados) {
+		
+		int i = 0;
+		
+		if (i == 0) {
+			new AutorizadoraException("Transação não autorizada. Cartão de crédito expirado!");
+		}
+		
+		return new AutorizadoraRetornoDTO(1L, 1L);
+	}
 
 	private void updateData(CartaoCredito novoCartaoCredito, CartaoCredito cartaoCredito) {	
 		novoCartaoCredito.setAluno(cartaoCredito.getAluno());
@@ -66,5 +80,6 @@ public class CartaoCreditoService {
 		novoCartaoCredito.setNome(cartaoCredito.getNome());
 		novoCartaoCredito.setVencimento(cartaoCredito.getVencimento());
 		novoCartaoCredito.setLimite(cartaoCredito.getLimite());
+		novoCartaoCredito.setCodigoSeguranca(cartaoCredito.getCodigoSeguranca());
 	}
 }

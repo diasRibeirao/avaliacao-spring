@@ -15,12 +15,12 @@ import org.springframework.web.servlet.HandlerMapping;
 
 import br.com.avaliacao.spring.domain.Aluno;
 import br.com.avaliacao.spring.domain.CartaoCredito;
-import br.com.avaliacao.spring.domain.dto.CartaoCreditoAdicionarDTO;
+import br.com.avaliacao.spring.domain.dto.CartaoCreditoAtualizarDTO;
 import br.com.avaliacao.spring.repositories.AlunoRepository;
 import br.com.avaliacao.spring.repositories.CartaoCreditoRepository;
 import br.com.avaliacao.spring.resources.exceptions.FieldMessage;
 
-public class CartaoCreditoAtualizarValidator implements ConstraintValidator<CartaoCreditoAdicionar, CartaoCreditoAdicionarDTO> {
+public class CartaoCreditoAtualizarValidator implements ConstraintValidator<CartaoCreditoAtualizar, CartaoCreditoAtualizarDTO> {
 
 	@Autowired
 	private HttpServletRequest request;
@@ -32,11 +32,11 @@ public class CartaoCreditoAtualizarValidator implements ConstraintValidator<Cart
 	private CartaoCreditoRepository cartaoCreditoRepository;
 
 	@Override
-	public void initialize(CartaoCreditoAdicionar ann) {
+	public void initialize(CartaoCreditoAtualizar ann) {
 	}
 
 	@Override
-	public boolean isValid(CartaoCreditoAdicionarDTO cartaoCreditoAdicionarDTO, ConstraintValidatorContext context) {
+	public boolean isValid(CartaoCreditoAtualizarDTO cartaoCreditoAtualizarDTO, ConstraintValidatorContext context) {
 
 		List<FieldMessage> list = new ArrayList<>();
 		
@@ -44,16 +44,16 @@ public class CartaoCreditoAtualizarValidator implements ConstraintValidator<Cart
 		Map<String, String> map = (Map<String, String>) request.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
 		Long uriId = Long.parseLong(map.get("id"));
 		
-		if (cartaoCreditoAdicionarDTO.getAlunoId() != null) {
-			Optional<Aluno> aluno = alunoRepository.findById(cartaoCreditoAdicionarDTO.getAlunoId());
+		if (cartaoCreditoAtualizarDTO.getAlunoId() != null) {
+			Optional<Aluno> aluno = alunoRepository.findById(cartaoCreditoAtualizarDTO.getAlunoId());
 			if (aluno.isEmpty()) {
-				list.add(new FieldMessage("alunoId", "Objeto não encontrado! Id: " + cartaoCreditoAdicionarDTO.getAlunoId() + ", Tipo: " + Aluno.class.getName()));
+				list.add(new FieldMessage("alunoId", "Objeto não encontrado! Id: " + cartaoCreditoAtualizarDTO.getAlunoId() + ", Tipo: " + Aluno.class.getName()));
 			}
 		}
 		
-		if (!StringUtils.isBlank(cartaoCreditoAdicionarDTO.getNumero())) {
-			Optional<CartaoCredito> aux = cartaoCreditoRepository.findByNumero(cartaoCreditoAdicionarDTO.getNumero());
-			if (aux.isEmpty() && !aux.get().getId().equals(uriId)) {
+		if (!StringUtils.isBlank(cartaoCreditoAtualizarDTO.getNumero())) {
+			Optional<CartaoCredito> aux = cartaoCreditoRepository.findByNumero(cartaoCreditoAtualizarDTO.getNumero());
+			if (aux.isPresent() && !aux.get().getId().equals(uriId)) {
 				list.add(new FieldMessage("numero", "Número já existente"));
 			}		 
 		}

@@ -19,7 +19,7 @@ public class CartaoCreditoConverter {
 			return null;
 
 		return new CartaoCredito(new Aluno(origin.getAlunoId()), origin.getNumero(), origin.getNome(),
-				origin.getVencimento(), origin.getLimite());
+				origin.getVencimento(), origin.getLimite(), origin.getCodigoSeguranca());
 	}
 
 	public List<CartaoCredito> ParseAtualizarDTO(List<CartaoCreditoAtualizarDTO> origin) {
@@ -34,7 +34,7 @@ public class CartaoCreditoConverter {
 			return null;
 
 		return new CartaoCredito(new Aluno(origin.getAlunoId()), origin.getNumero(), origin.getNome(),
-				origin.getVencimento(), origin.getLimite());
+				origin.getVencimento(), origin.getLimite(), origin.getCodigoSeguranca());
 	}
 
 	public List<CartaoCredito> ParseAdicionarDTO(List<CartaoCreditoAdicionarDTO> origin) {
@@ -49,7 +49,7 @@ public class CartaoCreditoConverter {
 			return null;
 
 		return new CartaoCreditoDTO(origin.getId(), origin.getAluno().getId(), origin.getNumero(), origin.getNome(),
-				origin.getVencimento(), origin.getLimite());
+				origin.getVencimento(), origin.getLimite(), origin.getCodigoSeguranca());
 	}
 
 	public List<CartaoCreditoDTO> Parse(List<CartaoCredito> origin) {
@@ -64,7 +64,7 @@ public class CartaoCreditoConverter {
 			return null;
 
 		return new CartaoCredito(new Aluno(origin.getAlunoId()), origin.getNumero(), origin.getNome(),
-				origin.getVencimento(), origin.getLimite());
+				origin.getVencimento(), origin.getLimite(), origin.getCodigoSeguranca());
 	}
 
 	public List<CartaoCredito> ParseDTO(List<CartaoCreditoDTO> origin) {
