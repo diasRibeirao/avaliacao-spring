@@ -18,7 +18,10 @@ import br.com.avaliacao.spring.domain.CartaoCredito;
 import br.com.avaliacao.spring.domain.dto.CartaoCreditoAdicionarDTO;
 import br.com.avaliacao.spring.domain.dto.CartaoCreditoAtualizarDTO;
 import br.com.avaliacao.spring.domain.dto.CartaoCreditoDTO;
+import br.com.avaliacao.spring.domain.dto.TransacaoCartaoCreditoDTO;
+import br.com.avaliacao.spring.domain.dto.TransacaoDTO;
 import br.com.avaliacao.spring.domain.dto.converter.CartaoCreditoConverter;
+import br.com.avaliacao.spring.domain.dto.converter.TransacaoConverter;
 import br.com.avaliacao.spring.services.CartaoCreditoService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -33,6 +36,9 @@ public class CartaoCreditoResource {
 
 	@Autowired
 	private CartaoCreditoConverter converter;
+	
+	@Autowired
+	private TransacaoConverter transacaoConverter;
 
 	@ApiOperation(value = "Listar todos as cartões de crédito", tags = { "Cartões de Crédito" })
 	@RequestMapping(method = RequestMethod.GET)
@@ -76,6 +82,13 @@ public class CartaoCreditoResource {
 		cartaoCredito = cartaoCreditoService.insert(cartaoCredito);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(cartaoCredito.getId()).toUri();
 		return ResponseEntity.created(uri).build();
+	}
+	
+	@ApiOperation(value = "Realizar uma transação pelo cartão de crédito", tags = { "Cartões de Crédito" })
+	@RequestMapping(value = "/transacao", method = RequestMethod.POST)
+	public ResponseEntity<TransacaoDTO> transacao(@Valid @RequestBody TransacaoCartaoCreditoDTO transacaoCartaoCreditoDTO) {		
+		TransacaoDTO obj = transacaoConverter.Parse(cartaoCreditoService.transacao(transacaoCartaoCreditoDTO));
+		return ResponseEntity.ok().body(obj);
 	}
 
 	@ApiOperation(value = "Atualizar um cartão de crédito", tags = { "Cartões de Crédito" })

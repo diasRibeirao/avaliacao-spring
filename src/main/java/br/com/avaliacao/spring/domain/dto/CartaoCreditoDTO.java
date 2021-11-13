@@ -19,21 +19,32 @@ public class CartaoCreditoDTO {
 	private YearMonth vencimento;
 
 	private BigDecimal limite;
-	
+
+	private BigDecimal valorDisponivel;
+
 	private String codigoSeguranca;
+
+	private Integer melhorDiaCompra;
+
+	private Boolean ativo;
 
 	public CartaoCreditoDTO() {
 
 	}
 
-	public CartaoCreditoDTO(Long id, long alunoId, String numero, String nome, YearMonth vencimento, BigDecimal limite, String codigoSeguranca) {
+	public CartaoCreditoDTO(Long id, long alunoId, String numero, String nome, YearMonth vencimento,
+			BigDecimal valorDisponivel, BigDecimal limite, String codigoSeguranca, Integer melhorDiaCompra,
+			Boolean ativo) {
 		this.id = id;
 		this.alunoId = alunoId;
 		this.numero = numero;
 		this.nome = nome;
 		this.vencimento = vencimento;
 		this.limite = limite;
+		this.valorDisponivel = valorDisponivel;
 		this.codigoSeguranca = codigoSeguranca;
+		this.melhorDiaCompra = melhorDiaCompra;
+		this.ativo = ativo;
 	}
 
 	public Long getId() {
@@ -84,6 +95,14 @@ public class CartaoCreditoDTO {
 		this.limite = limite;
 	}
 
+	public BigDecimal getValorDisponivel() {
+		return valorDisponivel;
+	}
+
+	public void setValorDisponivel(BigDecimal valorDisponivel) {
+		this.valorDisponivel = valorDisponivel;
+	}
+
 	public String getCodigoSeguranca() {
 		return codigoSeguranca;
 	}
@@ -92,5 +111,19 @@ public class CartaoCreditoDTO {
 		this.codigoSeguranca = codigoSeguranca;
 	}
 
-	
+	public Integer getMelhorDiaCompra() {
+		return melhorDiaCompra;
+	}
+
+	public void setMelhorDiaCompra(Integer melhorDiaCompra) {
+		this.melhorDiaCompra = melhorDiaCompra;
+	}
+
+	public Boolean isAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo(Boolean ativo) {
+		this.ativo = ativo;
+	}
 }

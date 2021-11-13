@@ -4,6 +4,9 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import br.com.avaliacao.spring.domain.enums.SituacaoTransacao;
 
 public class TransacaoDTO {
 
@@ -13,21 +16,25 @@ public class TransacaoDTO {
 
 	private String descricao;
 
-	@JsonFormat(pattern = "dd/MM/yyyy HH:mm")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm")
 	private Date data;
 
 	private BigDecimal valor;
+
+	@JsonIgnore
+	private Integer situacaoId;
 
 	public TransacaoDTO() {
 
 	}
 
-	public TransacaoDTO(Long id, Long faturaId, String descricao, Date data, BigDecimal valor) {
+	public TransacaoDTO(Long id, Long faturaId, String descricao, Date data, BigDecimal valor, Integer situacaoId) {
 		this.id = id;
 		this.faturaId = faturaId;
 		this.descricao = descricao;
 		this.data = data;
 		this.valor = valor;
+		this.situacaoId = situacaoId;
 	}
 
 	public Long getId() {
@@ -70,4 +77,15 @@ public class TransacaoDTO {
 		this.valor = valor;
 	}
 
+	public Integer getSituacaoId() {
+		return situacaoId;
+	}
+
+	public void setSituacaoId(Integer situacaoId) {
+		this.situacaoId = situacaoId;
+	}
+
+	public String getSituacao() {
+		return SituacaoTransacao.toEnum(this.situacaoId).getDescricao();
+	}
 }

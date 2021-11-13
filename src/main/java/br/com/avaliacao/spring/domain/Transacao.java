@@ -2,6 +2,7 @@ package br.com.avaliacao.spring.domain;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Calendar;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -14,6 +15,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.Valid;
+
+import br.com.avaliacao.spring.domain.dto.TransacaoCartaoCreditoDTO;
+import br.com.avaliacao.spring.domain.enums.SituacaoTransacao;
 
 @Entity
 @Table(name = "TRANSACAO")
@@ -38,23 +43,34 @@ public class Transacao implements Serializable {
 
 	@Column(name = "VALOR", precision = 8, scale = 2)
 	private BigDecimal valor;
-	
+
+	@Column(name = "SITUACAO")
+	private Integer situacao;
+
 	public Transacao() {
 
 	}
 
-	public Transacao(Long id, Fatura fatura, String descricao, Date data, BigDecimal valor) {
-		this(fatura, descricao, data, valor);
+	public Transacao(Long id, Fatura fatura, String descricao, Date data, BigDecimal valor, SituacaoTransacao situacao) {
+		this(fatura, descricao, data, valor, situacao);
 		this.id = id;
 	}
 
-	public Transacao(Fatura fatura, String descricao, Date data, BigDecimal valor) {
+	public Transacao(Fatura fatura, String descricao, Date data, BigDecimal valor, SituacaoTransacao situacao) {
 		this.fatura = fatura;
 		this.descricao = descricao;
 		this.data = data;
 		this.valor = valor;
+		this.situacao = (situacao == null) ? null : situacao.getCod();
 	}
-	
+
+	public Transacao(@Valid TransacaoCartaoCreditoDTO objDTO, Fatura fatura) {
+		this.fatura = fatura;
+		this.descricao = objDTO.getDescricaoCompra();
+		this.data = Calendar.getInstance().getTime();
+		this.valor = objDTO.getValorCompra();
+	}
+
 	public Long getId() {
 		return id;
 	}
@@ -93,6 +109,14 @@ public class Transacao implements Serializable {
 
 	public void setValor(BigDecimal valor) {
 		this.valor = valor;
+	}
+
+	public Integer getSituacao() {
+		return situacao;
+	}
+
+	public void setSituacao(Integer situacao) {
+		this.situacao = situacao;
 	}
 
 }

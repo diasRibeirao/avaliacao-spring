@@ -43,9 +43,15 @@ public class CartaoCredito implements Serializable {
 
 	@Column(name = "LIMITE", precision = 8, scale = 2)
 	private BigDecimal limite;
-	
+
 	@Column(name = "CODIGO_SEGURANCA")
 	private String codigoSeguranca;
+
+	@Column(name = "MELHOR_DIA_COMPRA")
+	private Integer melhorDiaCompra;
+
+	@Column(name = "ATIVO")
+	private Boolean ativo;
 
 	@JsonIgnore
 	@OneToMany(mappedBy = "cartaoCredito")
@@ -59,18 +65,22 @@ public class CartaoCredito implements Serializable {
 		this.id = id;
 	}
 
-	public CartaoCredito(Long id, Aluno aluno, String numero, String nome, YearMonth vencimento, BigDecimal limite, String codigoSeguranca) {
-		this(aluno, numero, nome, vencimento, limite, codigoSeguranca);
+	public CartaoCredito(Long id, Aluno aluno, String numero, String nome, YearMonth vencimento, BigDecimal limite,
+			String codigoSeguranca, Integer melhorDiaCompra, Boolean ativo) {
+		this(aluno, numero, nome, vencimento, limite, codigoSeguranca, melhorDiaCompra, ativo);
 		this.id = id;
 	}
 
-	public CartaoCredito(Aluno aluno, String numero, String nome, YearMonth vencimento, BigDecimal limite, String codigoSeguranca) {
+	public CartaoCredito(Aluno aluno, String numero, String nome, YearMonth vencimento, BigDecimal limite,
+			String codigoSeguranca, Integer melhorDiaCompra, Boolean ativo) {
 		this.aluno = aluno;
 		this.numero = numero;
 		this.nome = nome;
 		this.vencimento = vencimento;
 		this.limite = limite;
 		this.codigoSeguranca = codigoSeguranca;
+		this.melhorDiaCompra = melhorDiaCompra;
+		this.ativo = ativo;
 	}
 
 	public Long getId() {
@@ -120,6 +130,22 @@ public class CartaoCredito implements Serializable {
 	public void setLimite(BigDecimal limite) {
 		this.limite = limite;
 	}
+		
+	public BigDecimal getValorDisponivel() {
+		if (this.faturas.isEmpty()) {
+			return this.limite;
+		}
+		
+		BigDecimal valorFaturasAbertas = new BigDecimal(0);
+		
+		for (Fatura fatura : this.faturas) {
+			if (fatura.getDataPagamento() == null) {
+				valorFaturasAbertas = valorFaturasAbertas.add(fatura.getValorTotal());
+			}
+		}
+		
+		return this.limite.subtract(valorFaturasAbertas);
+	}
 
 	public List<Fatura> getFaturas() {
 		return faturas;
@@ -137,4 +163,23 @@ public class CartaoCredito implements Serializable {
 		this.codigoSeguranca = codigoSeguranca;
 	}
 
+	public Integer getMelhorDiaCompra() {
+		return melhorDiaCompra;
+	}
+
+	public void setMelhorDiaCompra(Integer melhorDiaCompra) {
+		this.melhorDiaCompra = melhorDiaCompra;
+	}
+
+	public Boolean isAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo(Boolean ativo) {
+		this.ativo = ativo;
+	}
+
+	public Boolean isBloqueado() {
+		return !ativo;
+	}
 }

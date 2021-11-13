@@ -8,6 +8,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import br.com.avaliacao.spring.domain.Transacao;
+import br.com.avaliacao.spring.domain.enums.SituacaoTransacao;
 import br.com.avaliacao.spring.repositories.TransacaoRepository;
 import br.com.avaliacao.spring.services.exceptions.DataIntegrityException;
 import br.com.avaliacao.spring.services.exceptions.ObjectNotFoundException;
@@ -18,15 +19,19 @@ public class TransacaoService {
 	@Autowired
 	private TransacaoRepository transacaoRepository;
 
+	@Autowired
+	private AutorizadoraService autorizadoraService;
+
 	public Transacao find(Long id) {
 		Optional<Transacao> obj = transacaoRepository.findById(id);
-		return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado! Id: " + id + ", Tipo: " + Transacao.class.getName()));
+		return obj.orElseThrow(() -> new ObjectNotFoundException(
+				"Objeto não encontrado! Id: " + id + ", Tipo: " + Transacao.class.getName()));
 	}
 
 	public List<Transacao> findAll() {
 		return transacaoRepository.findAll();
 	}
-	
+
 	public List<Transacao> findByFaturaId(Long faturaId) {
 		return transacaoRepository.findByFaturaId(faturaId);
 	}
@@ -42,6 +47,13 @@ public class TransacaoService {
 		return transacaoRepository.save(novoTransacao);
 	}
 
+	public void cancelar(Long id) {
+		Transacao transacao = find(id);
+		autorizadoraService.podeCancelarFatura(transacao.getFatura());
+		transacao.setSituacao(SituacaoTransacao.CANCELADA.getCod());
+		transacaoRepository.save(transacao);
+	}
+
 	public void delete(Long id) {
 		find(id);
 		try {
@@ -51,7 +63,7 @@ public class TransacaoService {
 		}
 	}
 
-	private void updateData(Transacao novoTransacao, Transacao transacao) {		
+	private void updateData(Transacao novoTransacao, Transacao transacao) {
 		novoTransacao.setFatura(transacao.getFatura());
 		novoTransacao.setDescricao(transacao.getDescricao());
 		novoTransacao.setValor(transacao.getValor());

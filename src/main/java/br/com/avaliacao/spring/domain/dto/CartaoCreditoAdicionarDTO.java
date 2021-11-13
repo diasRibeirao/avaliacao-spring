@@ -28,21 +28,30 @@ public class CartaoCreditoAdicionarDTO {
 
 	@NotNull(message = "Preenchimento obrigatório!")
 	private BigDecimal limite;
-	
+
 	@Size(min = 3, max = 3, message = "O código de segurança deve possuir {max} caracteres!")
 	private String codigoSeguranca;
+	
+	@NotNull(message = "Preenchimento obrigatório!")
+	private Integer melhorDiaCompra;
+
+	@NotNull(message = "Preenchimento obrigatório!")
+	private Boolean ativo;
 
 	public CartaoCreditoAdicionarDTO() {
-		
+
 	}
-	
-	public CartaoCreditoAdicionarDTO(Long alunoId, String numero, String nome, YearMonth vencimento, BigDecimal limite, String codigoSeguranca) {
+
+	public CartaoCreditoAdicionarDTO(Long alunoId, String numero, String nome, YearMonth vencimento, BigDecimal limite,
+			String codigoSeguranca, Integer melhorDiaCompra, Boolean ativo) {
 		this.alunoId = alunoId;
 		this.numero = numero;
 		this.nome = nome;
 		this.vencimento = vencimento;
 		this.limite = limite;
 		this.codigoSeguranca = codigoSeguranca;
+		this.melhorDiaCompra = melhorDiaCompra;
+		this.ativo = ativo;
 	}
 
 	public Long getAlunoId() {
@@ -93,5 +102,19 @@ public class CartaoCreditoAdicionarDTO {
 		this.codigoSeguranca = codigoSeguranca;
 	}
 
+	public Integer getMelhorDiaCompra() {
+		return melhorDiaCompra;
+	}
+
+	public void setMelhorDiaCompra(Integer melhorDiaCompra) {
+		this.melhorDiaCompra = melhorDiaCompra;
+	}
 	
+	public Boolean isAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo(Boolean ativo) {
+		this.ativo = ativo;
+	}
 }

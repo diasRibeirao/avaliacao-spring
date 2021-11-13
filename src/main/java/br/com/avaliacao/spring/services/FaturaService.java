@@ -20,15 +20,20 @@ public class FaturaService {
 
 	public Fatura find(Long id) {
 		Optional<Fatura> obj = faturaRepository.findById(id);
-		return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado! Id: " + id + ", Tipo: " + Fatura.class.getName()));
+		return obj.orElseThrow(() -> new ObjectNotFoundException(
+				"Objeto não encontrado! Id: " + id + ", Tipo: " + Fatura.class.getName()));
 	}
 
 	public List<Fatura> findAll() {
 		return faturaRepository.findAll();
 	}
-	
+
 	public List<Fatura> findByCartaoCreditoId(Long cartaoCreditoId) {
 		return faturaRepository.findByCartaoCreditoId(cartaoCreditoId);
+	}
+	
+	public Fatura findFaturaAtualByCartaoCreditoId(Long cartaoCreditoId) {
+		return faturaRepository.findFaturaAtualByCartaoCreditoId(cartaoCreditoId);
 	}
 
 	public Fatura insert(Fatura fatura) {
@@ -51,7 +56,7 @@ public class FaturaService {
 		}
 	}
 
-	private void updateData(Fatura novoFatura, Fatura fatura) {				
+	private void updateData(Fatura novoFatura, Fatura fatura) {
 		novoFatura.setCartaoCredito(fatura.getCartaoCredito());
 		novoFatura.setDataFechamento(fatura.getDataFechamento());
 		novoFatura.setDataVencimento(fatura.getDataVencimento());
@@ -59,5 +64,4 @@ public class FaturaService {
 		novoFatura.setValorPago(fatura.getValorPago());
 	}
 
-	
 }

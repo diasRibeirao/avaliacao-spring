@@ -21,6 +21,9 @@ import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import br.com.avaliacao.spring.domain.enums.SituacaoTransacao;
+import br.com.avaliacao.spring.utils.Utils;
+
 @Entity
 @Table(name = "FATURA")
 public class Fatura implements Serializable {
@@ -62,17 +65,27 @@ public class Fatura implements Serializable {
 		this.id = id;
 	}
 
-	public Fatura(Long id, CartaoCredito cartaoCredito, Date dataFechamento, Date dataVencimento, Date dataPagamento, BigDecimal valorPago) {
+	public Fatura(Long id, CartaoCredito cartaoCredito, Date dataFechamento, Date dataVencimento, Date dataPagamento,
+			BigDecimal valorPago) {
 		this(cartaoCredito, dataFechamento, dataVencimento, dataPagamento, valorPago);
 		this.id = id;
 	}
 
-	public Fatura(CartaoCredito cartaoCredito, Date dataFechamento, Date dataVencimento, Date dataPagamento, BigDecimal valorPago) {
+	public Fatura(CartaoCredito cartaoCredito, Date dataFechamento, Date dataVencimento, Date dataPagamento,
+			BigDecimal valorPago) {
 		this.cartaoCredito = cartaoCredito;
 		this.dataFechamento = dataFechamento;
 		this.dataVencimento = dataVencimento;
 		this.dataPagamento = dataPagamento;
 		this.valorPago = valorPago;
+	}
+
+	public Fatura(CartaoCredito cartaoCredito) {
+		this.cartaoCredito = cartaoCredito;
+		this.dataFechamento = Utils.dataFechamentoCartaoCredito(cartaoCredito.getMelhorDiaCompra());
+		this.dataVencimento = Utils.dataVencimento(this.dataFechamento);
+		this.dataPagamento = null;
+		this.valorPago = null;
 	}
 
 	public Long getId() {
@@ -115,7 +128,9 @@ public class Fatura implements Serializable {
 		BigDecimal valorTotal = new BigDecimal(0);
 
 		for (Transacao transacao : this.transacoes) {
-			valorTotal = valorTotal.add(transacao.getValor());
+			if (transacao.getSituacao().equals(SituacaoTransacao.ATIVA.getCod())) {
+				valorTotal = valorTotal.add(transacao.getValor());
+			}
 		}
 
 		return valorTotal;
@@ -144,7 +159,7 @@ public class Fatura implements Serializable {
 	public void setTransacoes(List<Transacao> transacoes) {
 		this.transacoes = transacoes;
 	}
-	
+
 	public Boolean isVencida() {
 		if (this.dataPagamento != null) {
 			return false;

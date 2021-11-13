@@ -5,7 +5,7 @@ import java.time.YearMonth;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-public class AutorizadoraDTO {
+public class TransacaoCartaoCreditoDTO {
 
 	private String numeroCartaoCredito;
 
@@ -16,18 +16,22 @@ public class AutorizadoraDTO {
 
 	private String codigoSegurancaCartaoCredito;
 
+	private String descricaoCompra;
+
 	private BigDecimal valorCompra;
-	
-	public AutorizadoraDTO() {
-		
+
+	public TransacaoCartaoCreditoDTO() {
+
 	}
 
-	public AutorizadoraDTO(String numeroCartaoCredito, String nomeImpresssoCartaoCredito,
-			YearMonth vencimentoCartaoCredito, String codigoSegurancaCartaoCredito, BigDecimal valorCompra) {
+	public TransacaoCartaoCreditoDTO(String numeroCartaoCredito, String nomeImpresssoCartaoCredito,
+			YearMonth vencimentoCartaoCredito, String codigoSegurancaCartaoCredito, String descricaoCompra,
+			BigDecimal valorCompra) {
 		this.numeroCartaoCredito = numeroCartaoCredito;
 		this.nomeImpresssoCartaoCredito = nomeImpresssoCartaoCredito;
 		this.vencimentoCartaoCredito = vencimentoCartaoCredito;
 		this.codigoSegurancaCartaoCredito = codigoSegurancaCartaoCredito;
+		this.descricaoCompra = descricaoCompra;
 		this.valorCompra = valorCompra;
 	}
 
@@ -61,6 +65,14 @@ public class AutorizadoraDTO {
 
 	public void setCodigoSegurancaCartaoCredito(String codigoSegurancaCartaoCredito) {
 		this.codigoSegurancaCartaoCredito = codigoSegurancaCartaoCredito;
+	}
+
+	public String getDescricaoCompra() {
+		return descricaoCompra;
+	}
+
+	public void setDescricaoCompra(String descricaoCompra) {
+		this.descricaoCompra = descricaoCompra;
 	}
 
 	public BigDecimal getValorCompra() {

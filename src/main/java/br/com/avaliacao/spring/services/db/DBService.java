@@ -20,6 +20,7 @@ import br.com.avaliacao.spring.domain.Aluno;
 import br.com.avaliacao.spring.domain.CartaoCredito;
 import br.com.avaliacao.spring.domain.Fatura;
 import br.com.avaliacao.spring.domain.Transacao;
+import br.com.avaliacao.spring.domain.enums.SituacaoTransacao;
 import br.com.avaliacao.spring.repositories.AlunoRepository;
 import br.com.avaliacao.spring.repositories.CartaoCreditoRepository;
 import br.com.avaliacao.spring.repositories.FaturaRepository;
@@ -90,7 +91,9 @@ public class DBService {
 					aluno.getNome(), 
 					getVencimento(), 
 					new BigDecimal(ThreadLocalRandom.current().nextFloat() * 10000),
-					 String.format("%03d", ThreadLocalRandom.current().nextInt(1000))
+					 String.format("%03d", ThreadLocalRandom.current().nextInt(1000)), 
+					 ThreadLocalRandom.current().nextInt(10, 15),
+					 true
 			));
 		}
 		
@@ -131,7 +134,8 @@ public class DBService {
 						fatura, 
 						descricoes[ThreadLocalRandom.current().nextInt(0, 20)], 
 						getData(ThreadLocalRandom.current().nextInt(1, 9)), 
-						new BigDecimal(ThreadLocalRandom.current().nextFloat() * 100)));
+						new BigDecimal(ThreadLocalRandom.current().nextFloat() * 100),
+						SituacaoTransacao.ATIVA));
 			}
 		}
 		
