@@ -12,14 +12,19 @@ import br.com.avaliacao.spring.domain.CartaoCredito;
 import br.com.avaliacao.spring.domain.Fatura;
 import br.com.avaliacao.spring.domain.dto.TransacaoCartaoCreditoDTO;
 import br.com.avaliacao.spring.repositories.CartaoCreditoRepository;
+import br.com.avaliacao.spring.repositories.FaturaRepository;
 import br.com.avaliacao.spring.services.exceptions.AutorizadoraException;
+import br.com.avaliacao.spring.utils.Utils;
 
 @Service
 public class AutorizadoraService {
 
 	@Autowired
 	private CartaoCreditoRepository cartaoCreditoRepository;
-
+	
+	@Autowired
+	private FaturaRepository faturaRepository;
+	
 	public CartaoCredito autorizar(TransacaoCartaoCreditoDTO objDTO) {
 		Optional<CartaoCredito> cartaoCredito = cartaoCreditoRepository.findByNumero(objDTO.getNumeroCartaoCredito());
 
@@ -75,6 +80,23 @@ public class AutorizadoraService {
 	public void podeCancelarFatura(Fatura fatura) {
 		if (fatura.getDataPagamento() != null) {
 			throw new AutorizadoraException("Transação não autorizada. Fatura com pagamento realizado. Entrar em contato com a administradora do cartão de crédito.");
+		}
+	}
+
+	public void podePagarFatura(Fatura fatura, BigDecimal valorPago) {		
+		if (fatura.getDataFechamento().after(Utils.dataAtual())) {
+			throw new AutorizadoraException("Transação não autorizada. Fatura ainda não foi fechada.");
+		}
+		
+		if (fatura.getDataPagamento() != null) {
+			throw new AutorizadoraException("Transação não autorizada. Fatura já foi paga.");
+		}
+				
+		Boolean podeValorMinimo = valorPago.compareTo(fatura.getValorMinimo()) >= 0;		
+		Boolean podeValorMaximo = valorPago.compareTo(fatura.getValorTotal()) <= 1;
+						
+		if (!podeValorMinimo || !podeValorMaximo) {
+			throw new AutorizadoraException("Transação não autorizada. Valor para pagamento dever no mínimo " + fatura.getValorMinimo() + " e no máximo " + fatura.getValorTotal() + ".");
 		}
 	}
 }

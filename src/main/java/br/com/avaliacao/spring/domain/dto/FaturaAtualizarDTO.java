@@ -12,13 +12,13 @@ public class FaturaAtualizarDTO {
 
 	private Long cartaoCreditoId;
 
-	@JsonFormat(pattern = "dd/MM/yyyy HH:mm")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm")
 	private Date dataFechamento;
 
-	@JsonFormat(pattern = "dd/MM/yyyy HH:mm")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm")
 	private Date dataVencimento;
 
-	@JsonFormat(pattern = "dd/MM/yyyy HH:mm")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm")
 	private Date dataPagamento;
 
 	private BigDecimal valorPago;

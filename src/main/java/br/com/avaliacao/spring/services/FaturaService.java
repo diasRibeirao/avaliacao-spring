@@ -1,5 +1,7 @@
 package br.com.avaliacao.spring.services;
 
+import java.math.BigDecimal;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,6 +20,9 @@ public class FaturaService {
 	@Autowired
 	private FaturaRepository faturaRepository;
 
+	@Autowired
+	private AutorizadoraService autorizadoraService;
+
 	public Fatura find(Long id) {
 		Optional<Fatura> obj = faturaRepository.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
@@ -31,7 +36,7 @@ public class FaturaService {
 	public List<Fatura> findByCartaoCreditoId(Long cartaoCreditoId) {
 		return faturaRepository.findByCartaoCreditoId(cartaoCreditoId);
 	}
-	
+
 	public Fatura findFaturaAtualByCartaoCreditoId(Long cartaoCreditoId) {
 		return faturaRepository.findFaturaAtualByCartaoCreditoId(cartaoCreditoId);
 	}
@@ -45,6 +50,13 @@ public class FaturaService {
 		Fatura novoFatura = find(fatura.getId());
 		updateData(novoFatura, fatura);
 		return faturaRepository.save(novoFatura);
+	}
+
+	public void pagar(Fatura fatura, BigDecimal valorPago) {
+		autorizadoraService.podePagarFatura(fatura, valorPago);
+		fatura.setDataPagamento(Calendar.getInstance().getTime());
+		fatura.setValorPago(valorPago);
+		faturaRepository.save(fatura);
 	}
 
 	public void delete(Long id) {

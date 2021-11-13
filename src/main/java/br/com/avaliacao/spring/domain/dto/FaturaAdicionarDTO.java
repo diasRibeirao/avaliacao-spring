@@ -16,14 +16,14 @@ public class FaturaAdicionarDTO {
 	private Long cartaoCreditoId;
 
 	@NotNull(message = "Preenchimento obrigatório!")
-	@JsonFormat(pattern = "dd/MM/yyyy HH:mm")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
 	private Date dataFechamento;
 
 	@NotNull(message = "Preenchimento obrigatório!")
-	@JsonFormat(pattern = "dd/MM/yyyy HH:mm")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
 	private Date dataVencimento;
 
-	@JsonFormat(pattern = "dd/MM/yyyy HH:mm")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
 	private Date dataPagamento;
 
 	private BigDecimal valorPago;

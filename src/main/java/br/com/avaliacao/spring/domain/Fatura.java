@@ -22,6 +22,7 @@ import javax.persistence.TemporalType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import br.com.avaliacao.spring.domain.enums.SituacaoTransacao;
+import br.com.avaliacao.spring.utils.Constantes;
 import br.com.avaliacao.spring.utils.Utils;
 
 @Entity
@@ -121,11 +122,11 @@ public class Fatura implements Serializable {
 	}
 
 	public BigDecimal getValorTotal() {
-		if (this.transacoes.isEmpty()) {
-			return new BigDecimal(0);
-		}
+		BigDecimal valorTotal = BigDecimal.ZERO;
 
-		BigDecimal valorTotal = new BigDecimal(0);
+		if (this.transacoes.isEmpty()) {
+			return valorTotal;
+		}
 
 		for (Transacao transacao : this.transacoes) {
 			if (transacao.getSituacao().equals(SituacaoTransacao.ATIVA.getCod())) {
@@ -134,6 +135,16 @@ public class Fatura implements Serializable {
 		}
 
 		return valorTotal;
+	}
+
+	public BigDecimal getValorMinimo() {
+		BigDecimal valorMinimo = BigDecimal.ZERO;
+
+		if (this.getValorTotal().equals(BigDecimal.ZERO)) {
+			return valorMinimo;
+		}
+		
+		return this.getValorTotal().multiply(Constantes.PERC_PAGAMENTO_MIN).divide(new BigDecimal(100));
 	}
 
 	public Date getDataPagamento() {
