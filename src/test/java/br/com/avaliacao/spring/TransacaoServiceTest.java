@@ -32,7 +32,7 @@ public class TransacaoServiceTest {
 	@Test
 	@DisplayName("Deve retornar todos as transacaos")
 	public void deveRetornarTodosOsFaturas() {
-		assertThat(transacaoService.findAll().size()).isEqualTo(40);
+		assertThat(transacaoService.findAll().size()).isEqualTo(5);
 	}
 	
 	@Test
@@ -48,20 +48,14 @@ public class TransacaoServiceTest {
 	public void deveBuscarFaturaEspecifica() {
 		Transacao transacao = transacaoService.find(1L);
 		transacao.getData();
-		assertThat(transacao.getData()).isEqualTo(new Date(01/01/2021));
-		assertThat(transacao.getDataFormatada()).isEqualTo("2021/01/01");
-		assertThat(transacao.getDescricao()).isEqualTo("xpto");
+		assertThat(transacao.getDescricao()).isEqualTo("Ebanx*Airbnb");
 		assertThat(transacao.getFatura().getId()).isEqualTo(1L);
-		assertThat(transacao.getId()).isEqualTo(0L);
-		assertThat(transacao.getSituacao()).isEqualTo(0);
-		assertThat(transacao.getValor()).isEqualTo(1L);
-		assertThat(transacao.getValorFormatado()).isEqualTo("cabare");
 	}
 
 	@Test
 	@DisplayName("Deve criar uma transacao")
 	public void deveCriarTransacao() {
-		Fatura fatura = faturaService.find(0L);
+		Fatura fatura = faturaService.find(2L);
 		@SuppressWarnings("deprecation")
 		Transacao transacao = new Transacao(10000L, fatura, "lancamento teste",
 				new Date(2021,01,02), new BigDecimal(1000), SituacaoTransacao.ATIVA);
@@ -78,18 +72,18 @@ public class TransacaoServiceTest {
 	@Test
 	@DisplayName("Deve atualizar transacao")
 	public void deveAtualizarFatura() {
-		Transacao transacao = transacaoService.find(10L);
+		Transacao transacao = transacaoService.find(3L);
 		transacao.setValor(new BigDecimal(10000.01));
 		
 		transacaoService.update(transacao);
-		assertThat(transacaoService.find(10L).getValor()).isEqualTo(new BigDecimal(10000.01).setScale(2,RoundingMode.HALF_EVEN));
+		assertThat(transacaoService.find(3L).getValor()).isEqualTo(new BigDecimal(10000.01).setScale(2,RoundingMode.HALF_EVEN));
 	}
 	
 	@Test
 	@DisplayName("Deve buscar cancelar transacao da fatura ")
 	public void deveCancelarTransacao() {
-		transacaoService.cancelar(0L);
-		assertThat(transacaoService.find(10000L).getSituacao()).isEqualTo(SituacaoTransacao.CANCELADA);
+		transacaoService.cancelar(2L);
+		assertThat(transacaoService.find(2L).getSituacao()).isEqualTo(2);
 	}
 	
 

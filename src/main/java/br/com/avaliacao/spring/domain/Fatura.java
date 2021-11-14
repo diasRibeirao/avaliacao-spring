@@ -9,6 +9,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -55,7 +56,7 @@ public class Fatura implements Serializable {
 	private BigDecimal valorPago;
 
 	@JsonIgnore
-	@OneToMany(mappedBy = "fatura")
+	@OneToMany(mappedBy = "fatura", fetch = FetchType.EAGER)
 	private List<Transacao> transacoes = new ArrayList<Transacao>();
 
 	public Fatura() {

@@ -12,12 +12,12 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
-import org.springframework.dao.DataIntegrityViolationException;
 
 import br.com.avaliacao.spring.domain.Aluno;
 import br.com.avaliacao.spring.domain.CartaoCredito;
 import br.com.avaliacao.spring.services.AlunoService;
 import br.com.avaliacao.spring.services.CartaoCreditoService;
+import br.com.avaliacao.spring.services.exceptions.DataIntegrityException;
 import br.com.avaliacao.spring.services.exceptions.ObjectNotFoundException;
 
 @SpringBootTest(webEnvironment =  WebEnvironment.RANDOM_PORT)
@@ -31,7 +31,7 @@ public class CartaoCreditoServiceTest {
 	@Test
 	@DisplayName("Deve retornar todos os cartoes de credito ")
 	public void deveRetornarTodosOsCartoes() {
-		assertThat(cartaoService.findAll().size()).isEqualTo(10929);
+		assertThat(cartaoService.findAll().size()).isBetween(3, 4);
 		//verificar o tamanho, é variavel
 	}
 	
@@ -46,71 +46,73 @@ public class CartaoCreditoServiceTest {
 	@DisplayName("Deve buscar um cartao pelo nome do aluno")
 	public void deveBuscarUmCartaoPeloNome()
 	{
-		List<CartaoCredito> cartoes = cartaoService.findByNome("Lucia");
+		List<CartaoCredito> cartoes = cartaoService.findByNome("Emerson Dias de Oliveira");
 		CartaoCredito cartao = cartoes.get(0);
-		assertThat(cartao.getId()).isEqualTo(0);
-		assertThat(cartao.getAluno().getId()).isEqualTo(0);
-		assertThat(cartao.getCodigoSeguranca()).isEqualTo("xpto");
-		assertThat(cartao.getFaturas().size()).isEqualTo(0);
-		assertThat(cartao.getLimite()).isEqualTo("xpto");
-		assertThat(cartao.getNome()).isEqualTo("nomeee");
-		assertThat(cartao.getNumero()).isEqualTo("xpto");
-		assertThat(cartao.getVencimento()).isEqualTo(YearMonth.of(2021, 2));
+		assertThat(cartao.getId()).isEqualTo(1);
+		assertThat(cartao.getAluno().getId()).isEqualTo(10930);
+		assertThat(cartao.getCodigoSeguranca()).isEqualTo("123");
+		assertThat(cartao.getFaturas().size()).isEqualTo(3);
+		assertThat(cartao.getLimite()).isEqualTo("10000.00");
+		assertThat(cartao.getNome()).isEqualTo("Emerson Dias de Oliveira");
+		assertThat(cartao.getNumero()).isEqualTo("1234567891234567");
+		assertThat(cartao.getVencimento()).isEqualTo(YearMonth.of(2023, 2));
 	}
 
 	@Test
 	@DisplayName("Deve buscar um cartao pelo id")
 	public void deveBuscarUmCartaoPeloAlunoID()
 	{
-		List<CartaoCredito> cartoes = cartaoService.findByAlunoId(0L);
+		List<CartaoCredito> cartoes = cartaoService.findByAlunoId(10930L);
 		CartaoCredito cartao = cartoes.get(0);
-		assertThat(cartao.getId()).isEqualTo(0);
-		assertThat(cartao.getAluno().getId()).isEqualTo(0);
-		assertThat(cartao.getCodigoSeguranca()).isEqualTo("xpto");
-		assertThat(cartao.getFaturas().size()).isEqualTo(0);
-		assertThat(cartao.getLimite()).isEqualTo("xpto");
-		assertThat(cartao.getNome()).isEqualTo("nomeee");
-		assertThat(cartao.getNumero()).isEqualTo("xpto");
-		assertThat(cartao.getVencimento()).isEqualTo(YearMonth.of(2021, 2));
+		cartoes.get(0).getFaturas().size();
+		assertThat(cartao.getId()).isEqualTo(1);
+		assertThat(cartao.getAluno().getId()).isEqualTo(10930);
+		assertThat(cartao.getCodigoSeguranca()).isEqualTo("123");
+		assertThat(cartao.getFaturas().size()).isEqualTo(3);
+		assertThat(cartao.getLimite()).isEqualTo("10000.00");
+		assertThat(cartao.getNome()).isEqualTo("Emerson Dias de Oliveira");
+		assertThat(cartao.getNumero()).isEqualTo("1234567891234567");
+		assertThat(cartao.getVencimento()).isEqualTo(YearMonth.of(2023, 2));
 	}
 	
 	@Test
 	@DisplayName("Deve buscar um cartao pelo id")
 	public void deveBuscarUmCartao()
 	{
-		CartaoCredito cartao = cartaoService.find(0L);
-		assertThat(cartao.getId()).isEqualTo(0);
-		assertThat(cartao.getAluno().getId()).isEqualTo(0);
-		assertThat(cartao.getCodigoSeguranca()).isEqualTo("xpto");
-		assertThat(cartao.getFaturas().size()).isEqualTo(0);
-		assertThat(cartao.getLimite()).isEqualTo("xpto");
-		assertThat(cartao.getNome()).isEqualTo("nomeee");
-		assertThat(cartao.getNumero()).isEqualTo("xpto");
-		assertThat(cartao.getVencimento()).isEqualTo(YearMonth.of(2021, 2));
+		CartaoCredito cartao = cartaoService.find(1L);
+		assertThat(cartao.getId()).isEqualTo(1);
+		assertThat(cartao.getAluno().getId()).isEqualTo(10930);
+		assertThat(cartao.getCodigoSeguranca()).isEqualTo("123");
+		assertThat(cartao.getFaturas().size()).isEqualTo(3);
+		assertThat(cartao.getLimite()).isEqualTo("10000.00");
+		assertThat(cartao.getNome()).isEqualTo("Emerson Dias de Oliveira");
+		assertThat(cartao.getNumero()).isEqualTo("1234567891234567");
+		assertThat(cartao.getVencimento()).isEqualTo(YearMonth.of(2023, 2));
 	}
 	
 	@Test
 	@DisplayName("Deve buscar um cartao pelo numero")
 	public void deveBuscarUmCartaoPeloNumero()
 	{
-		CartaoCredito cartao = cartaoService.findByNumero("123443321");
-		assertThat(cartao.getId()).isEqualTo(0);
-		assertThat(cartao.getAluno().getId()).isEqualTo(0);
-		assertThat(cartao.getCodigoSeguranca()).isEqualTo("xpto");
-		assertThat(cartao.getFaturas().size()).isEqualTo(0);
-		assertThat(cartao.getLimite()).isEqualTo("xpto");
-		assertThat(cartao.getNome()).isEqualTo("nomeee");
-		assertThat(cartao.getNumero()).isEqualTo("xpto");
-		assertThat(cartao.getVencimento()).isEqualTo(YearMonth.of(2021, 2));
+		CartaoCredito cartao = cartaoService.findByNumero("1234567891234567");
+		assertThat(cartao.getId()).isEqualTo(1);
+		assertThat(cartao.getAluno().getId()).isEqualTo(10930);
+		assertThat(cartao.getCodigoSeguranca()).isEqualTo("123");
+		assertThat(cartao.getFaturas().size()).isEqualTo(3);
+		assertThat(cartao.getLimite()).isEqualTo("10000.00");
+		assertThat(cartao.getNome()).isEqualTo("Emerson Dias de Oliveira");
+		assertThat(cartao.getNumero()).isEqualTo("1234567891234567");
+		assertThat(cartao.getVencimento()).isEqualTo(YearMonth.of(2023, 2));
 	}
 
 	@Test
 	@DisplayName("Deve atualizar cartao")
 	public void deveAtualizarCartao() {
-		CartaoCredito cartao = cartaoService.find(1L);
+		CartaoCredito cartao = cartaoService.find(2L);
 		cartao.setNome("Novo Nome");
 		cartaoService.update(cartao);
-		assertThat(cartaoService.find(1L).getNome()).isEqualTo("Novo Nome");
+		assertThat(cartaoService.find(2L).getNome()).isEqualTo("Novo Nome");
+	
 	}
 	
 	@Test
@@ -121,21 +123,21 @@ public class CartaoCreditoServiceTest {
 		CartaoCredito cartao = new CartaoCredito(aluno,"1234", "nome do aluno",YearMonth.of(2021,2),new BigDecimal(2000),"1234",02,true);
 
 		CartaoCredito insert = cartaoService.insert(cartao);
-		assertThat(cartao.getId()).isEqualTo(0);
-		assertThat(cartao.getAluno().getId()).isEqualTo(0);
-		assertThat(cartao.getCodigoSeguranca()).isEqualTo("xpto");
-		assertThat(cartao.getFaturas().size()).isEqualTo(0);
-		assertThat(cartao.getLimite()).isEqualTo("xpto");
-		assertThat(cartao.getNome()).isEqualTo("nomeee");
-		assertThat(cartao.getNumero()).isEqualTo("xpto");
-		assertThat(cartao.getVencimento()).isEqualTo(YearMonth.of(2021, 2));
+		assertThat(insert.getId()).isEqualTo(3L);
+		assertThat(insert.getAluno().getId()).isEqualTo(1);
+		assertThat(insert.getCodigoSeguranca()).isEqualTo(cartao.getCodigoSeguranca());
+		assertThat(insert.getFaturas().size()).isEqualTo(0);
+		assertThat(insert.getLimite()).isEqualTo(cartao.getLimite());
+		assertThat(insert.getNome()).isEqualTo(cartao.getNome());
+		assertThat(insert.getNumero()).isEqualTo(cartao.getNumero());
+		assertThat(insert.getVencimento()).isEqualTo(cartao.getVencimento());
 	}
 	
 	@Test
 	@DisplayName("Nao deve excluir cartao devido a relacionament")
 	public void naoDeveExcluirAluno() {
-		Assertions.assertThrows(DataIntegrityViolationException.class, () -> {
-			cartaoService.delete(0L);
+		Assertions.assertThrows(DataIntegrityException.class, () -> {
+			cartaoService.delete(1L);
 		});
 	}
 }
