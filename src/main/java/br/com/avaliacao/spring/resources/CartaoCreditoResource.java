@@ -23,12 +23,12 @@ import br.com.avaliacao.spring.domain.dto.TransacaoDTO;
 import br.com.avaliacao.spring.domain.dto.converter.CartaoCreditoConverter;
 import br.com.avaliacao.spring.domain.dto.converter.TransacaoConverter;
 import br.com.avaliacao.spring.services.CartaoCreditoService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
-@Api(value = "Cartões de Crédito", description = "APIs Cartões de Crédito", tags = { "Cartões de Crédito" })
 @RequestMapping(value = "/v1/cartoes")
+@Tag(name = "Cartoes")
 public class CartaoCreditoResource {
 
 	@Autowired
@@ -40,42 +40,42 @@ public class CartaoCreditoResource {
 	@Autowired
 	private TransacaoConverter transacaoConverter;
 
-	@ApiOperation(value = "Listar todos as cartões de crédito", tags = { "Cartões de Crédito" })
+	@Operation(summary = "Listar todos as cartões de crédito")
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<CartaoCreditoDTO>> findAll() {
 		List<CartaoCreditoDTO> list = converter.Parse(cartaoCreditoService.findAll());
 		return ResponseEntity.ok().body(list);
 	}
 
-	@ApiOperation(value = "Buscar o cartão de crédito pelo id", tags = { "Cartões de Crédito" })
+	@Operation(summary = "Buscar o cartão de crédito pelo id")
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<CartaoCreditoDTO> find(@PathVariable Long id) {
 		CartaoCreditoDTO obj = converter.Parse(cartaoCreditoService.find(id));
 		return ResponseEntity.ok().body(obj);
 	}
 
-	@ApiOperation(value = "Buscar o cartão de crédito pelo nome", tags = { "Cartões de Crédito" })
+	@Operation(summary = "Buscar o cartão de crédito pelo nome")
 	@RequestMapping(value = "/nome/{nome}", method = RequestMethod.GET)
 	public ResponseEntity<List<CartaoCreditoDTO>> findByNome(@PathVariable String nome) {
 		List<CartaoCreditoDTO> list = converter.Parse(cartaoCreditoService.findByNome(nome));
 		return ResponseEntity.ok().body(list);
 	}
 
-	@ApiOperation(value = "Buscar o cartão de crédito pelo número", tags = { "Cartões de Crédito" })
+	@Operation(summary = "Buscar o cartão de crédito pelo número")
 	@RequestMapping(value = "/numero/{numero}", method = RequestMethod.GET)
 	public ResponseEntity<CartaoCreditoDTO> findByNumero(@PathVariable String numero) {
 		CartaoCreditoDTO obj = converter.Parse(cartaoCreditoService.findByNumero(numero));
 		return ResponseEntity.ok().body(obj);
 	}
 
-	@ApiOperation(value = "Buscar cartões de crédito pelo id do aluno", tags = { "Cartões de Crédito" })
+	@Operation(summary = "Buscar cartões de crédito pelo id do aluno")
 	@RequestMapping(value = "/alunos/{alunoId}", method = RequestMethod.GET)
 	public ResponseEntity<List<CartaoCreditoDTO>> findByAlunoId(@PathVariable Long alunoId) {
 		List<CartaoCreditoDTO> list = converter.Parse(cartaoCreditoService.findByAlunoId(alunoId));
 		return ResponseEntity.ok().body(list);
 	}
 
-	@ApiOperation(value = "Adicionar um cartão de crédito", tags = { "Cartões de Crédito" })
+	@Operation(summary = "Adicionar um cartão de crédito")
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<Void> insert(@Valid @RequestBody CartaoCreditoAdicionarDTO cartaoCreditoAdicionarDTO) {
 		CartaoCredito cartaoCredito = converter.ParseAdicionarDTO(cartaoCreditoAdicionarDTO);
@@ -84,14 +84,14 @@ public class CartaoCreditoResource {
 		return ResponseEntity.created(uri).build();
 	}
 	
-	@ApiOperation(value = "Realizar uma transação pelo cartão de crédito", tags = { "Cartões de Crédito" })
+	@Operation(summary = "Realizar uma transação pelo cartão de crédito")
 	@RequestMapping(value = "/transacao", method = RequestMethod.POST)
 	public ResponseEntity<TransacaoDTO> transacao(@Valid @RequestBody TransacaoCartaoCreditoDTO transacaoCartaoCreditoDTO) {		
 		TransacaoDTO obj = transacaoConverter.Parse(cartaoCreditoService.transacao(transacaoCartaoCreditoDTO));
 		return ResponseEntity.ok().body(obj);
 	}
 
-	@ApiOperation(value = "Atualizar um cartão de crédito", tags = { "Cartões de Crédito" })
+	@Operation(summary = "Atualizar um cartão de crédito")
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<Void> update(@Valid @RequestBody CartaoCreditoAtualizarDTO objDto, @PathVariable Long id) {
 		CartaoCredito obj = converter.ParseAtualizarDTO(objDto);
@@ -100,7 +100,7 @@ public class CartaoCreditoResource {
 		return ResponseEntity.noContent().build();
 	}
 
-	@ApiOperation(value = "Deletar um cartão de crédito", tags = { "Cartões de Crédito" })
+	@Operation(summary = "Deletar um cartão de crédito")
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Void> delete(@PathVariable Long id) {
 		cartaoCreditoService.delete(id);

@@ -12,12 +12,12 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.avaliacao.spring.domain.dto.TransacaoDTO;
 import br.com.avaliacao.spring.domain.dto.converter.TransacaoConverter;
 import br.com.avaliacao.spring.services.TransacaoService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
-@Api(value = "Transações", description = "APIs Transações", tags = { "Transações" })
 @RequestMapping(value = "/v1/transacoes")
+@Tag(name = "Transacoes")
 public class TransacaoResource {
 
 	@Autowired
@@ -26,28 +26,28 @@ public class TransacaoResource {
 	@Autowired
 	private TransacaoConverter converter;
 
-	@ApiOperation(value = "Listar todos as transações", tags = { "Transações" })
+	@Operation(summary = "Listar todos as transações", tags = { "Transações" })
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<TransacaoDTO>> findAll() {
 		List<TransacaoDTO> list = converter.Parse(transacaoService.findAll());
 		return ResponseEntity.ok().body(list);
 	}
 
-	@ApiOperation(value = "Buscar a transação pelo id", tags = { "Transações" })
+	@Operation(summary = "Buscar a transação pelo id", tags = { "Transações" })
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<TransacaoDTO> find(@PathVariable Long id) {
 		TransacaoDTO obj = converter.Parse(transacaoService.find(id));
 		return ResponseEntity.ok().body(obj);
 	}
 
-	@ApiOperation(value = "Buscar transações pelo id da fatura", tags = { "Transações" })
+	@Operation(summary = "Buscar transações pelo id da fatura", tags = { "Transações" })
 	@RequestMapping(value = "/faturas/{faturaId}", method = RequestMethod.GET)
 	public ResponseEntity<List<TransacaoDTO>> findByFaturaId(@PathVariable Long faturaId) {
 		List<TransacaoDTO> list = converter.Parse(transacaoService.findByFaturaId(faturaId));
 		return ResponseEntity.ok().body(list);
 	}
 	
-	@ApiOperation(value = "Cancelar uma transação", tags = { "Transações"})
+	@Operation(summary = "Cancelar uma transação")
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<String> cancelar(@PathVariable Long id) {
 		transacaoService.cancelar(id);
