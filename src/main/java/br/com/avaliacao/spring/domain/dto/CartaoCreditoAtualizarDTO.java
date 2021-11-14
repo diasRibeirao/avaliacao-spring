@@ -9,8 +9,10 @@ import javax.validation.constraints.Size;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import br.com.avaliacao.spring.services.validation.CartaoCreditoAtualizar;
+import lombok.Data;
 
 @CartaoCreditoAtualizar
+@Data
 public class CartaoCreditoAtualizarDTO {
 
 	@NotNull(message = "Preenchimento obrigatório!")
@@ -54,67 +56,9 @@ public class CartaoCreditoAtualizarDTO {
 		this.ativo = ativo;
 	}
 
-	public Long getAlunoId() {
-		return alunoId;
-	}
-
-	public void setAlunoId(Long alunoId) {
-		this.alunoId = alunoId;
-	}
-
-	public String getNumero() {
-		return numero;
-	}
-
-	public void setNumero(String numero) {
-		this.numero = numero;
-	}
-
-	public String getNome() {
-		return nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
-	public YearMonth getVencimento() {
-		return vencimento;
-	}
-
-	public void setVencimento(YearMonth vencimento) {
-		this.vencimento = vencimento;
-	}
-
-	public BigDecimal getLimite() {
-		return limite;
-	}
-
-	public void setLimite(BigDecimal limite) {
-		this.limite = limite;
-	}
-
-	public String getCodigoSeguranca() {
-		return codigoSeguranca;
-	}
-
-	public void setCodigoSeguranca(String codigoSeguranca) {
-		this.codigoSeguranca = codigoSeguranca;
-	}
-	
-	public Integer getMelhorDiaCompra() {
-		return melhorDiaCompra;
-	}
-
-	public void setMelhorDiaCompra(Integer melhorDiaCompra) {
-		this.melhorDiaCompra = melhorDiaCompra;
-	}
 
 	public Boolean isAtivo() {
 		return ativo;
 	}
 
-	public void setAtivo(Boolean ativo) {
-		this.ativo = ativo;
-	}
 }

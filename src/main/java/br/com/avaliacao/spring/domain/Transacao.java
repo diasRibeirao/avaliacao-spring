@@ -20,8 +20,10 @@ import javax.validation.Valid;
 import br.com.avaliacao.spring.domain.dto.TransacaoCartaoCreditoDTO;
 import br.com.avaliacao.spring.domain.enums.SituacaoTransacao;
 import br.com.avaliacao.spring.utils.Utils;
+import lombok.Data;
 
 @Entity
+@Data
 @Table(name = "TRANSACAO")
 public class Transacao implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -73,60 +75,14 @@ public class Transacao implements Serializable {
 		this.valor = objDTO.getValorCompra();
 	}
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public Fatura getFatura() {
-		return fatura;
-	}
-
-	public void setFatura(Fatura fatura) {
-		this.fatura = fatura;
-	}
-
-	public String getDescricao() {
-		return descricao;
-	}
-
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
-	}
-
-	public Date getData() {
-		return data;
-	}
 	
 	public String getDataFormatada() {
 		return Utils.dateToString(this.data);
 	}
 
-	public void setData(Date data) {
-		this.data = data;
-	}
-
-	public BigDecimal getValor() {
-		return valor;
-	}
-	
 	public String getValorFormatado() {
 		return Utils.formatReal(this.valor);
 	}
 
-	public void setValor(BigDecimal valor) {
-		this.valor = valor;
-	}
-
-	public Integer getSituacao() {
-		return situacao;
-	}
-
-	public void setSituacao(Integer situacao) {
-		this.situacao = situacao;
-	}
 
 }

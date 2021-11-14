@@ -5,6 +5,9 @@ import java.time.YearMonth;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import lombok.Data;
+
+@Data
 public class CartaoCreditoDTO {
 
 	private Long id;
@@ -47,83 +50,9 @@ public class CartaoCreditoDTO {
 		this.ativo = ativo;
 	}
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public long getAlunoId() {
-		return alunoId;
-	}
-
-	public void setAlunoId(long alunoId) {
-		this.alunoId = alunoId;
-	}
-
-	public String getNumero() {
-		return numero;
-	}
-
-	public void setNumero(String numero) {
-		this.numero = numero;
-	}
-
-	public String getNome() {
-		return nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
-	public YearMonth getVencimento() {
-		return vencimento;
-	}
-
-	public void setVencimento(YearMonth vencimento) {
-		this.vencimento = vencimento;
-	}
-
-	public BigDecimal getLimite() {
-		return limite;
-	}
-
-	public void setLimite(BigDecimal limite) {
-		this.limite = limite;
-	}
-
-	public BigDecimal getValorDisponivel() {
-		return valorDisponivel;
-	}
-
-	public void setValorDisponivel(BigDecimal valorDisponivel) {
-		this.valorDisponivel = valorDisponivel;
-	}
-
-	public String getCodigoSeguranca() {
-		return codigoSeguranca;
-	}
-
-	public void setCodigoSeguranca(String codigoSeguranca) {
-		this.codigoSeguranca = codigoSeguranca;
-	}
-
-	public Integer getMelhorDiaCompra() {
-		return melhorDiaCompra;
-	}
-
-	public void setMelhorDiaCompra(Integer melhorDiaCompra) {
-		this.melhorDiaCompra = melhorDiaCompra;
-	}
 
 	public Boolean isAtivo() {
 		return ativo;
 	}
 
-	public void setAtivo(Boolean ativo) {
-		this.ativo = ativo;
-	}
 }
