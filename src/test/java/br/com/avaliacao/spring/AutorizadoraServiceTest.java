@@ -25,10 +25,12 @@ public class AutorizadoraServiceTest {
 	@Test
 	@DisplayName("Deve apresentar erro de cartao expirado")
 	public void deveApresentarErroCartaoExpirado() {
+
 		TransacaoCartaoCreditoDTO autorizacao = new TransacaoCartaoCreditoDTO(
 				"1609651850505841","ANGELICA CRISTINA GARCIA",YearMonth.of(2025, 07),
 				"634","Roupas",new BigDecimal(10000000)
 				);
+
 
 
 		Assertions.assertThrows(AutorizadoraException.class, ()  -> {
@@ -39,6 +41,7 @@ public class AutorizadoraServiceTest {
 	@Test
 	@DisplayName("Deve retornar apresentar erro de codigo de seguranca invaido ")
 	public void deveApresentarErroCodigoSegurancaInvalido() {
+
 		TransacaoCartaoCreditoDTO autorizacao = new TransacaoCartaoCreditoDTO(
 				"1609651850505841","ANGELICA CRISTINA GARCIA",YearMonth.of(2025, 07),
 				"000","Roupas",new BigDecimal(10000000)
@@ -53,10 +56,12 @@ public class AutorizadoraServiceTest {
 	@Test
 	@DisplayName("Deve retornar apresentar erro de cartao invalido ")
 	public void deveApresentarErroDeCartaoInvalido() {
+
 		TransacaoCartaoCreditoDTO autorizacao = new TransacaoCartaoCreditoDTO(
 				"1111111111111","ANGELICA CRISTINA GARCIA",YearMonth.of(2025, 07),
 				"634","Roupas",new BigDecimal(10000000)
 				);
+
 
 
 		Assertions.assertThrows(AutorizadoraException.class, ()  -> {
@@ -67,11 +72,13 @@ public class AutorizadoraServiceTest {
 	@Test
 	@DisplayName("Deve retornar autorizado ")
 	public void deveRetornarOK() {
+
 		TransacaoCartaoCreditoDTO autorizacao = new TransacaoCartaoCreditoDTO(
 				"1111111111111","ANGELICA CRISTINA GARCIA",YearMonth.of(2025, 07),
 				"634","Roupas",new BigDecimal(10000000)
 				);
 		assertThat(autorizadoraService.autorizar(autorizacao));
+
 //		verificar o retorno como vira e verificar ele 
 		
 	}

@@ -117,7 +117,9 @@ public class CartaoCreditoServiceTest {
 	@DisplayName("Deve inserir cartao")
 	public void deveInserirAluno() {
 		Aluno aluno = alunoService.find(1L);
+
 		CartaoCredito cartao = new CartaoCredito(aluno,"1234", "nome do aluno",YearMonth.of(2021,2),new BigDecimal(2000),"1234",02,true);
+
 		CartaoCredito insert = cartaoService.insert(cartao);
 		assertThat(cartao.getId()).isEqualTo(0);
 		assertThat(cartao.getAluno().getId()).isEqualTo(0);
