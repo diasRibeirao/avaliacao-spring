@@ -8,6 +8,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -56,7 +57,7 @@ public class CartaoCredito implements Serializable {
 	private Boolean ativo;
 
 	@JsonIgnore
-	@OneToMany(mappedBy = "cartaoCredito")
+	@OneToMany(mappedBy = "cartaoCredito",fetch = FetchType.EAGER)
 	private List<Fatura> faturas = new ArrayList<Fatura>();
 
 	public CartaoCredito() {

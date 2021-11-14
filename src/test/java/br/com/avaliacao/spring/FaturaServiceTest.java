@@ -11,10 +11,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
-import org.springframework.dao.DataIntegrityViolationException;
 
 import br.com.avaliacao.spring.domain.Fatura;
 import br.com.avaliacao.spring.services.FaturaService;
+import br.com.avaliacao.spring.services.exceptions.DataIntegrityException;
 import br.com.avaliacao.spring.services.exceptions.ObjectNotFoundException;
 
 @SpringBootTest(webEnvironment =  WebEnvironment.RANDOM_PORT)
@@ -26,7 +26,7 @@ public class FaturaServiceTest {
 	@Test
 	@DisplayName("Deve retornar todos as faturas")
 	public void deveRetornarTodosOsFaturas() {
-		assertThat(faturaService.findAll().size()).isEqualTo(10);
+		assertThat(faturaService.findAll().size()).isEqualTo(2);
 	}
 	
 	@Test
@@ -40,32 +40,32 @@ public class FaturaServiceTest {
 	@Test
 	@DisplayName("Deve atualizar fatura")
 	public void deveAtualizarFatura() {
-		Fatura fatura = faturaService.find(10L);
+		Fatura fatura = faturaService.find(2L);
 		fatura.setValorPago(new BigDecimal(10000.01));
 		
 		faturaService.update(fatura);
-		assertThat(faturaService.find(10L).getValorPago()).isEqualTo(new BigDecimal(10000.01).setScale(2,RoundingMode.HALF_EVEN));
+		assertThat(faturaService.find(2L).getValorPago()).isEqualTo(new BigDecimal(10000.01).setScale(2,RoundingMode.HALF_EVEN));
 	}
 	
 	@Test
 	@DisplayName("Deve buscar fatura com base no ID cartao de crédito")
 	public void deveBuscarFaturaPeloCartao() {
-		assertThat(faturaService.findByCartaoCreditoId(21L).size()).isEqualTo(1);
+		assertThat(faturaService.findByCartaoCreditoId(2L).size()).isEqualTo(1);
 		
 	}
 	
 	@Test
 	@DisplayName("Deve buscar fatura com base no ID da fatura")
 	public void deveBuscarFaturaPeloId() {
-		assertThat(faturaService.find(21L).getCartaoCredito()).isEqualTo(1);
+		assertThat(faturaService.find(2L).getCartaoCredito().getId()).isEqualTo(2);
 		
 	}
 	
 	@Test
 	@DisplayName("Deve dar erro ao tentar excluir fatura")
 	public void deveApresentarErroAoTentarExcluirFatura() {
-		Assertions.assertThrows(DataIntegrityViolationException.class, () -> {
-			faturaService.delete(0L);
+		Assertions.assertThrows(DataIntegrityException.class, () -> {
+			faturaService.delete(2L);
 		});
 	}
 }

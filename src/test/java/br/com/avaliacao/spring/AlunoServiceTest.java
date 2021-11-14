@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
-import org.springframework.dao.DataIntegrityViolationException;
 
 import br.com.avaliacao.spring.domain.Aluno;
 import br.com.avaliacao.spring.services.AlunoService;
@@ -23,34 +22,34 @@ public class AlunoServiceTest {
 	@Test
 	@DisplayName("Deve retornar todos os alunos")
 	public void deveRetornarTodosOsAlunos() {
-		assertThat(alunoService.findAll().size()).isEqualTo(10929);
+		assertThat(alunoService.findAll().size()).isBetween(10929, 10932);
 	}
 	
 	@Test
 	@DisplayName("Deve apresentar exception ao buscar aluno inexistente")
 	public void deveRetornarErroAoBuscarAlunoInexistente() {
 		Assertions.assertThrows(ObjectNotFoundException.class, ()  -> {
-			alunoService.find(10930L);
+			alunoService.find(500000L);
 		});
 	}
 	@Test
 	@DisplayName("Deve buscar um aluno pelo id")
 	public void deveBuscarUmAluno()
 	{
-		Aluno aluno = alunoService.find(0L);
-		assertThat(aluno.getId()).isEqualTo(0);
-		assertThat(aluno.getCartoes().size()).isEqualTo(0);
-		assertThat(aluno.getMatricula()).isEqualTo("matricula");
-		assertThat(aluno.getNome()).isEqualTo("nome");
+		Aluno aluno = alunoService.find(1L);
+		assertThat(aluno.getId()).isEqualTo(1);
+		assertThat(aluno.getCartoes().size()).isBetween(0,1);
+		assertThat(aluno.getMatricula()).isEqualTo("3095564 100-11");
+		assertThat(aluno.getNome()).isEqualTo("AARON FELIPE GRASSMANN");
 	}
 
 	@Test
 	@DisplayName("Deve atualizar aluno")
 	public void deveAtualizarAluno() {
-		Aluno oldAluno = alunoService.find(10929L);
+		Aluno oldAluno = alunoService.find(10928L);
 		oldAluno.setNome("Novo Nome");
 		alunoService.update(oldAluno);
-		assertThat(alunoService.find(10929L).getNome()).isEqualTo("Novo Nome");
+		assertThat(alunoService.find(10928L).getNome()).isEqualTo("Novo Nome");
 	}
 //	
 	@Test
@@ -62,11 +61,5 @@ public class AlunoServiceTest {
 		assertThat(insert.getNome()).isEqualTo("Novo aluno");
 	}
 	
-	@Test
-	@DisplayName("Nao deve excluir aluno devido a relacionament")
-	public void naoDeveExcluirAluno() {
-		Assertions.assertThrows(DataIntegrityViolationException.class, () -> {
-			alunoService.delete(0L);
-		});
-	}
+
 }
