@@ -1,6 +1,5 @@
 package br.com.avaliacao.spring.resources;
 
-import java.io.FileInputStream;
 import java.net.URI;
 import java.util.List;
 
