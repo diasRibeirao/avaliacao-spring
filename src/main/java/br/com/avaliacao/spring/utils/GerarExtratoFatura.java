@@ -2,6 +2,8 @@ package br.com.avaliacao.spring.utils;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.util.Collections;
+import java.util.Comparator;
 
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
@@ -26,33 +28,34 @@ public class GerarExtratoFatura {
 		try {
 			PdfWriter.getInstance(document, out);
 			document.open();
-			
-            Paragraph pTitulo = new Paragraph("EXTRATO CARTÃO DE CRÉDITO", new Font(Font.FontFamily.TIMES_ROMAN, 18, Font.BOLD));
-            pTitulo.setAlignment(Element.ALIGN_CENTER);
-            document.add(pTitulo);
-            document.add(new Paragraph(" "));
-            document.add(new Paragraph(fatura.getCartaoCredito().getNome()));
-                        
-            PdfPTable tCartaoInfo = new PdfPTable(4);
-            tCartaoInfo.setWidthPercentage(100);
-            tCartaoInfo.setWidths(new float[] { 4, 2, 2, 2 });
-            tCartaoInfo.getDefaultCell().setBorder(0);
-            
+
+			Paragraph pTitulo = new Paragraph("EXTRATO CARTÃO DE CRÉDITO",
+					new Font(Font.FontFamily.TIMES_ROMAN, 18, Font.BOLD));
+			pTitulo.setAlignment(Element.ALIGN_CENTER);
+			document.add(pTitulo);
+			document.add(new Paragraph(" "));
+			document.add(new Paragraph(fatura.getCartaoCredito().getNome()));
+
+			PdfPTable tCartaoInfo = new PdfPTable(4);
+			tCartaoInfo.setWidthPercentage(100);
+			tCartaoInfo.setWidths(new float[] { 4, 2, 2, 2 });
+			tCartaoInfo.getDefaultCell().setBorder(0);
+
 			tCartaoInfo.addCell(criarPdfPCell("Número do Cartão"));
 			tCartaoInfo.addCell(criarPdfPCell("Limite"));
 			tCartaoInfo.addCell(criarPdfPCell("Disponível"));
 			tCartaoInfo.addCell(criarPdfPCell("Vencimento"));
 			tCartaoInfo.setHeaderRows(1);
-			
+
 			tCartaoInfo.addCell(new Paragraph(fatura.getCartaoCredito().getNumero()));
 			tCartaoInfo.addCell(new Paragraph("R$ " + fatura.getCartaoCredito().getLimiteFormatado()));
-            tCartaoInfo.addCell(new Paragraph("R$ " + fatura.getCartaoCredito().getValorDisponivelFormatado()));
-            tCartaoInfo.addCell(new Paragraph(fatura.getDataVencimentoFormatada()));
-                        
-            document.add(tCartaoInfo);
-            
-            document.add(new Paragraph(" "));
-            
+			tCartaoInfo.addCell(new Paragraph("R$ " + fatura.getCartaoCredito().getValorDisponivelFormatado()));
+			tCartaoInfo.addCell(new Paragraph(fatura.getDataVencimentoFormatada()));
+
+			document.add(tCartaoInfo);
+
+			document.add(new Paragraph(" "));
+
 			PdfPTable tTransacoes = new PdfPTable(3);
 			tTransacoes.setWidthPercentage(100);
 			tTransacoes.setWidths(new float[] { 2, 6, 2 });
@@ -71,24 +74,33 @@ public class GerarExtratoFatura {
 			cell1.setBackgroundColor(BaseColor.LIGHT_GRAY);
 			tTransacoes.addCell(cell1);
 			tTransacoes.setHeaderRows(1);
-			
+
 			if (fatura.getTransacoes().isEmpty()) {
 				PdfPCell empty = new PdfPCell(new Phrase("Sem transações nesta fatura"));
 				empty.setColspan(3);
 				tTransacoes.addCell(empty);
-			} else {			
+			} else {
+				Collections.sort(fatura.getTransacoes(), new Comparator<Transacao>() {
+					@Override
+					public int compare(Transacao t1, Transacao t2) {
+						return t1.getData().compareTo(t2.getData());
+					}
+				});
+
 				for (Transacao transacao : fatura.getTransacoes()) {
 					tTransacoes.addCell(transacao.getDataFormatada());
-					tTransacoes.addCell(transacao.getDescricao().length() > 39 ? transacao.getDescricao().substring(0, 40) : transacao.getDescricao());
+					tTransacoes
+							.addCell(transacao.getDescricao().length() > 39 ? transacao.getDescricao().substring(0, 40)
+									: transacao.getDescricao());
 					tTransacoes.addCell("R$ " + transacao.getValorFormatado());
 				}
-				
+
 				PdfPCell total = new PdfPCell(new Phrase("TOTAL A PAGAR  "));
 				total.setColspan(2);
 				total.setHorizontalAlignment(Element.ALIGN_RIGHT);
 				total.setBackgroundColor(BaseColor.LIGHT_GRAY);
 				tTransacoes.addCell(total);
-				
+
 				PdfPCell totalPagar = new PdfPCell(new Phrase("R$ " + fatura.getValorTotalFormatado()));
 				totalPagar.setHorizontalAlignment(Element.ALIGN_CENTER);
 				totalPagar.setBackgroundColor(BaseColor.LIGHT_GRAY);
@@ -105,7 +117,7 @@ public class GerarExtratoFatura {
 
 		return new ByteArrayInputStream(out.toByteArray());
 	}
-	
+
 	private static PdfPCell criarPdfPCell(String valor) {
 		PdfPCell cell = new PdfPCell(new Phrase(valor));
 		cell.setBorder(0);
