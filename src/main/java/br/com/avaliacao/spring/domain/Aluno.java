@@ -15,7 +15,10 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import lombok.Data;
+
 @Entity
+@Data
 @Table(name = "ALUNO")
 public class Aluno implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -53,36 +56,6 @@ public class Aluno implements Serializable {
 		this.nome = nome;
 	}
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getMatricula() {
-		return matricula;
-	}
-
-	public void setMatricula(String matricula) {
-		this.matricula = matricula;
-	}
-
-	public String getNome() {
-		return nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
-	public List<CartaoCredito> getCartoes() {
-		return cartoes;
-	}
-
-	public void setCartoes(List<CartaoCredito> cartoes) {
-		this.cartoes = cartoes;
-	}
+	
 
 }

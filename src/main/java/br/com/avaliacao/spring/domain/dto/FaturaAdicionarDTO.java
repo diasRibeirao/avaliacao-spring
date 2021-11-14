@@ -8,8 +8,10 @@ import javax.validation.constraints.NotNull;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import br.com.avaliacao.spring.services.validation.FaturaAdicionar;
+import lombok.Data;
 
 @FaturaAdicionar
+@Data
 public class FaturaAdicionarDTO {
 
 	@NotNull(message = "Preenchimento obrigatório!")
@@ -40,44 +42,5 @@ public class FaturaAdicionarDTO {
 		this.valorPago = valorPago;
 	}
 
-	public Long getCartaoCreditoId() {
-		return cartaoCreditoId;
-	}
-
-	public void setCartaoCreditoId(Long cartaoCreditoId) {
-		this.cartaoCreditoId = cartaoCreditoId;
-	}
-
-	public Date getDataFechamento() {
-		return dataFechamento;
-	}
-
-	public void setDataFechamento(Date dataFechamento) {
-		this.dataFechamento = dataFechamento;
-	}
-
-	public Date getDataVencimento() {
-		return dataVencimento;
-	}
-
-	public void setDataVencimento(Date dataVencimento) {
-		this.dataVencimento = dataVencimento;
-	}
-
-	public Date getDataPagamento() {
-		return dataPagamento;
-	}
-
-	public void setDataPagamento(Date dataPagamento) {
-		this.dataPagamento = dataPagamento;
-	}
-
-	public BigDecimal getValorPago() {
-		return valorPago;
-	}
-
-	public void setValorPago(BigDecimal valorPago) {
-		this.valorPago = valorPago;
-	}
 
 }

@@ -20,8 +20,10 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import br.com.avaliacao.spring.utils.Utils;
+import lombok.Data;
 
 @Entity
+@Data
 @Table(name = "CARTAO_CREDITO")
 public class CartaoCredito implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -86,53 +88,7 @@ public class CartaoCredito implements Serializable {
 		this.ativo = ativo;
 	}
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public Aluno getAluno() {
-		return aluno;
-	}
-
-	public void setAluno(Aluno aluno) {
-		this.aluno = aluno;
-	}
-
-	public String getNumero() {
-		return numero;
-	}
-
-	public void setNumero(String numero) {
-		this.numero = numero;
-	}
-
-	public String getNome() {
-		return nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
-	public YearMonth getVencimento() {
-		return vencimento;
-	}
-
-	public void setVencimento(YearMonth vencimento) {
-		this.vencimento = vencimento;
-	}
-
-	public BigDecimal getLimite() {
-		return limite;
-	}
-
-	public void setLimite(BigDecimal limite) {
-		this.limite = limite;
-	}
+	
 		
 	public BigDecimal getValorDisponivel() {
 		if (this.faturas.isEmpty()) {
@@ -148,38 +104,6 @@ public class CartaoCredito implements Serializable {
 		}
 		
 		return this.limite.subtract(valorFaturasAbertas);
-	}
-
-	public List<Fatura> getFaturas() {
-		return faturas;
-	}
-
-	public void setFaturas(List<Fatura> faturas) {
-		this.faturas = faturas;
-	}
-
-	public String getCodigoSeguranca() {
-		return codigoSeguranca;
-	}
-
-	public void setCodigoSeguranca(String codigoSeguranca) {
-		this.codigoSeguranca = codigoSeguranca;
-	}
-
-	public Integer getMelhorDiaCompra() {
-		return melhorDiaCompra;
-	}
-
-	public void setMelhorDiaCompra(Integer melhorDiaCompra) {
-		this.melhorDiaCompra = melhorDiaCompra;
-	}
-
-	public Boolean isAtivo() {
-		return ativo;
-	}
-
-	public void setAtivo(Boolean ativo) {
-		this.ativo = ativo;
 	}
 
 	public Boolean isBloqueado() {

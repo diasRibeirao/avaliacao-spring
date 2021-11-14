@@ -25,8 +25,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import br.com.avaliacao.spring.domain.enums.SituacaoTransacao;
 import br.com.avaliacao.spring.utils.Constantes;
 import br.com.avaliacao.spring.utils.Utils;
+import lombok.Data;
 
 @Entity
+@Data
 @Table(name = "FATURA")
 public class Fatura implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -90,37 +92,6 @@ public class Fatura implements Serializable {
 		this.valorPago = null;
 	}
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public CartaoCredito getCartaoCredito() {
-		return cartaoCredito;
-	}
-
-	public void setCartaoCredito(CartaoCredito cartaoCredito) {
-		this.cartaoCredito = cartaoCredito;
-	}
-
-	public Date getDataFechamento() {
-		return dataFechamento;
-	}
-
-	public void setDataFechamento(Date dataFechamento) {
-		this.dataFechamento = dataFechamento;
-	}
-
-	public Date getDataVencimento() {
-		return dataVencimento;
-	}
-
-	public void setDataVencimento(Date dataVencimento) {
-		this.dataVencimento = dataVencimento;
-	}
 
 	public BigDecimal getValorTotal() {
 		BigDecimal valorTotal = BigDecimal.ZERO;
@@ -150,30 +121,6 @@ public class Fatura implements Serializable {
 		}
 		
 		return this.getValorTotal().multiply(Constantes.PERC_PAGAMENTO_MIN).divide(new BigDecimal(100));
-	}
-
-	public Date getDataPagamento() {
-		return dataPagamento;
-	}
-
-	public void setDataPagamento(Date dataPagamento) {
-		this.dataPagamento = dataPagamento;
-	}
-
-	public BigDecimal getValorPago() {
-		return valorPago;
-	}
-
-	public void setValorPago(BigDecimal valorPago) {
-		this.valorPago = valorPago;
-	}
-
-	public List<Transacao> getTransacoes() {
-		return transacoes;
-	}
-
-	public void setTransacoes(List<Transacao> transacoes) {
-		this.transacoes = transacoes;
 	}
 
 	public Boolean isVencida() {

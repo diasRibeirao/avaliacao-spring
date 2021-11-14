@@ -1,5 +1,8 @@
 package br.com.avaliacao.spring.domain.dto;
 
+import lombok.Data;
+
+@Data
 public class AutorizadoraRetornoDTO {
 
 	private Long cartaoCreditoId;
@@ -13,22 +16,6 @@ public class AutorizadoraRetornoDTO {
 	public AutorizadoraRetornoDTO(Long cartaoCreditoId, Long alunoId) {
 		super();
 		this.cartaoCreditoId = cartaoCreditoId;
-		this.alunoId = alunoId;
-	}
-
-	public Long getCartaoCreditoId() {
-		return cartaoCreditoId;
-	}
-
-	public void setCartaoCreditoId(Long cartaoCreditoId) {
-		this.cartaoCreditoId = cartaoCreditoId;
-	}
-
-	public Long getAlunoId() {
-		return alunoId;
-	}
-
-	public void setAlunoId(Long alunoId) {
 		this.alunoId = alunoId;
 	}
 

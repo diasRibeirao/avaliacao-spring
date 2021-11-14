@@ -7,7 +7,9 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import br.com.avaliacao.spring.domain.enums.SituacaoTransacao;
+import lombok.Data;
 
+@Data
 public class TransacaoDTO {
 
 	private Long id;
@@ -37,53 +39,6 @@ public class TransacaoDTO {
 		this.situacaoId = situacaoId;
 	}
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public Long getFaturaId() {
-		return faturaId;
-	}
-
-	public void setFaturaId(Long faturaId) {
-		this.faturaId = faturaId;
-	}
-
-	public String getDescricao() {
-		return descricao;
-	}
-
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
-	}
-
-	public Date getData() {
-		return data;
-	}
-
-	public void setData(Date data) {
-		this.data = data;
-	}
-
-	public BigDecimal getValor() {
-		return valor;
-	}
-
-	public void setValor(BigDecimal valor) {
-		this.valor = valor;
-	}
-
-	public Integer getSituacaoId() {
-		return situacaoId;
-	}
-
-	public void setSituacaoId(Integer situacaoId) {
-		this.situacaoId = situacaoId;
-	}
 
 	public String getSituacao() {
 		return SituacaoTransacao.toEnum(this.situacaoId).getDescricao();
