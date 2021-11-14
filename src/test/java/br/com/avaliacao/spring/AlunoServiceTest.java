@@ -33,16 +33,16 @@ public class AlunoServiceTest {
 			alunoService.find(10930L);
 		});
 	}
-//	@Test
-//	@DisplayName("Deve buscar um aluno pelo id")
-//	public void deveBuscarUmAluno()
-//	{
-//		Aluno aluno = alunoService.find(0L);
-//		assertThat(aluno.getId()).isEqualTo(0);
-//		assertThat(aluno.getCartoes().size()).isEqualTo(0);
-//		assertThat(aluno.getMatricula()).isEqualTo("matricula");
-//		assertThat(aluno.getNome()).isEqualTo("nome");
-//	}
+	@Test
+	@DisplayName("Deve buscar um aluno pelo id")
+	public void deveBuscarUmAluno()
+	{
+		Aluno aluno = alunoService.find(0L);
+		assertThat(aluno.getId()).isEqualTo(0);
+		assertThat(aluno.getCartoes().size()).isEqualTo(0);
+		assertThat(aluno.getMatricula()).isEqualTo("matricula");
+		assertThat(aluno.getNome()).isEqualTo("nome");
+	}
 
 	@Test
 	@DisplayName("Deve atualizar aluno")
@@ -53,14 +53,14 @@ public class AlunoServiceTest {
 		assertThat(alunoService.find(10929L).getNome()).isEqualTo("Novo Nome");
 	}
 //	
-//	@Test
-//	@DisplayName("Deve inserir aluno")
-//	public void deveInserirAluno() {
-//		Aluno novoAluno = new Aluno(null, "1234", "Novo aluno");
-//		Aluno insert = alunoService.insert(novoAluno);
-//		assertThat(insert.getMatricula()).isEqualTo("1234");
-//		assertThat(insert.getNome()).isEqualTo("Novo aluno");
-//	}
+	@Test
+	@DisplayName("Deve inserir aluno")
+	public void deveInserirAluno() {
+		Aluno novoAluno = new Aluno(null, "1234", "Novo aluno");
+		Aluno insert = alunoService.insert(novoAluno);
+		assertThat(insert.getMatricula()).isEqualTo("1234");
+		assertThat(insert.getNome()).isEqualTo("Novo aluno");
+	}
 	
 	@Test
 	@DisplayName("Nao deve excluir aluno devido a relacionament")
