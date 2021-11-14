@@ -12,7 +12,6 @@ import br.com.avaliacao.spring.domain.CartaoCredito;
 import br.com.avaliacao.spring.domain.Fatura;
 import br.com.avaliacao.spring.domain.dto.TransacaoCartaoCreditoDTO;
 import br.com.avaliacao.spring.repositories.CartaoCreditoRepository;
-import br.com.avaliacao.spring.repositories.FaturaRepository;
 import br.com.avaliacao.spring.services.exceptions.AutorizadoraException;
 import br.com.avaliacao.spring.utils.Utils;
 
@@ -21,10 +20,7 @@ public class AutorizadoraService {
 
 	@Autowired
 	private CartaoCreditoRepository cartaoCreditoRepository;
-	
-	@Autowired
-	private FaturaRepository faturaRepository;
-	
+		
 	public CartaoCredito autorizar(TransacaoCartaoCreditoDTO objDTO) {
 		Optional<CartaoCredito> cartaoCredito = cartaoCreditoRepository.findByNumero(objDTO.getNumeroCartaoCredito());
 

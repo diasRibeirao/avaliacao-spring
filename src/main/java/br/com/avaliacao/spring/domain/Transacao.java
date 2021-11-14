@@ -19,6 +19,7 @@ import javax.validation.Valid;
 
 import br.com.avaliacao.spring.domain.dto.TransacaoCartaoCreditoDTO;
 import br.com.avaliacao.spring.domain.enums.SituacaoTransacao;
+import br.com.avaliacao.spring.utils.Utils;
 
 @Entity
 @Table(name = "TRANSACAO")
@@ -51,7 +52,8 @@ public class Transacao implements Serializable {
 
 	}
 
-	public Transacao(Long id, Fatura fatura, String descricao, Date data, BigDecimal valor, SituacaoTransacao situacao) {
+	public Transacao(Long id, Fatura fatura, String descricao, Date data, BigDecimal valor,
+			SituacaoTransacao situacao) {
 		this(fatura, descricao, data, valor, situacao);
 		this.id = id;
 	}
@@ -98,6 +100,10 @@ public class Transacao implements Serializable {
 	public Date getData() {
 		return data;
 	}
+	
+	public String getDataFormatada() {
+		return Utils.dateToString(this.data);
+	}
 
 	public void setData(Date data) {
 		this.data = data;
@@ -105,6 +111,10 @@ public class Transacao implements Serializable {
 
 	public BigDecimal getValor() {
 		return valor;
+	}
+	
+	public String getValorFormatado() {
+		return Utils.formatReal(this.valor);
 	}
 
 	public void setValor(BigDecimal valor) {

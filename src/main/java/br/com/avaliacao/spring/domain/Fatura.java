@@ -136,6 +136,10 @@ public class Fatura implements Serializable {
 
 		return valorTotal;
 	}
+	
+	public String getValorTotalFormatado() {
+		return Utils.formatReal(this.getValorTotal());
+	}
 
 	public BigDecimal getValorMinimo() {
 		BigDecimal valorMinimo = BigDecimal.ZERO;
@@ -177,6 +181,10 @@ public class Fatura implements Serializable {
 		}
 
 		return Calendar.getInstance().getTime().after(this.dataVencimento);
+	}
+
+	public String getDataVencimentoFormatada() {
+		return Utils.dateToString(this.dataVencimento);
 	}
 
 }

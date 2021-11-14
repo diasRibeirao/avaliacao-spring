@@ -1,5 +1,6 @@
 package br.com.avaliacao.spring.services;
 
+import java.io.InputStream;
 import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.List;
@@ -13,6 +14,7 @@ import br.com.avaliacao.spring.domain.Fatura;
 import br.com.avaliacao.spring.repositories.FaturaRepository;
 import br.com.avaliacao.spring.services.exceptions.DataIntegrityException;
 import br.com.avaliacao.spring.services.exceptions.ObjectNotFoundException;
+import br.com.avaliacao.spring.utils.GerarExtratoFatura;
 
 @Service
 public class FaturaService {
@@ -74,6 +76,10 @@ public class FaturaService {
 		novoFatura.setDataVencimento(fatura.getDataVencimento());
 		novoFatura.setDataPagamento(fatura.getDataPagamento());
 		novoFatura.setValorPago(fatura.getValorPago());
+	}
+
+	public InputStream gerarExtrato(Fatura fatura) {
+		return GerarExtratoFatura.gerar(fatura);
 	}
 
 }

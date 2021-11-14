@@ -18,6 +18,8 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import br.com.avaliacao.spring.utils.Utils;
+
 @Entity
 @Table(name = "CARTAO_CREDITO")
 public class CartaoCredito implements Serializable {
@@ -181,5 +183,17 @@ public class CartaoCredito implements Serializable {
 
 	public Boolean isBloqueado() {
 		return !ativo;
+	}
+
+	public String getLimiteFormatado() {
+		return Utils.formatReal(this.limite);
+	}
+
+	public String getValorDisponivelFormatado() {
+		return Utils.formatReal(this.getValorDisponivel());
+	}
+
+	public String getVencimentoFormatado() {
+		return this.vencimento.toString();
 	}
 }

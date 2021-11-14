@@ -2,8 +2,6 @@ package br.com.avaliacao.spring.domain.dto;
 
 import java.math.BigDecimal;
 
-import javax.persistence.Column;
-
 public class FaturaPagarDTO {
 
 	private BigDecimal valorPago;

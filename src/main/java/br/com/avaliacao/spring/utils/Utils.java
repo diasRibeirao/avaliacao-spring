@@ -1,9 +1,16 @@
 package br.com.avaliacao.spring.utils;
 
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.text.Format;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
 public class Utils {
+
+	private static final Format FORMATTER_DATA = new SimpleDateFormat("dd/MM/yyyy");
+	private static final Format FORMATTER_REAL = new DecimalFormat("#,###,##0.00");
 
 	public static Date dataFechamentoCartaoCredito(Integer melhorDiaPagamento) {
 		Calendar calendar = Calendar.getInstance();
@@ -34,7 +41,7 @@ public class Utils {
 
 		return calendar.getTime();
 	}
-	
+
 	public static Date dataAtual() {
 		Calendar calendar = Calendar.getInstance();
 		calendar.set(Calendar.MILLISECOND, 0);
@@ -43,5 +50,20 @@ public class Utils {
 		calendar.set(Calendar.HOUR, 0);
 		calendar.set(Calendar.AM_PM, Calendar.AM);
 		return calendar.getTime();
+	}
+
+	public static String dateToString(Date data) {
+		if (data == null) {
+			return "";
+		}
+
+		return FORMATTER_DATA.format(data);
+	}
+
+	public static String formatReal(BigDecimal valor) {
+		if (valor == null) {
+			return "";
+		}
+		return FORMATTER_REAL.format(valor);
 	}
 }

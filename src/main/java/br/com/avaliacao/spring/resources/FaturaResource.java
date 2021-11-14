@@ -1,11 +1,15 @@
 package br.com.avaliacao.spring.resources;
 
+import java.io.FileInputStream;
 import java.net.URI;
 import java.util.List;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.CacheControl;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -80,6 +84,19 @@ public class FaturaResource {
 		Fatura fatura = faturaService.find(id);
 		faturaService.pagar(fatura, faturaPagarDTO.getValorPago());
 		return ResponseEntity.ok().body("Fatura paga com sucesso.");
+	}
+	
+	@ApiOperation(value = "Gerar extrato de uma fatura", tags = { "Faturas" })
+	@RequestMapping(value = "/extrato/{id}", method = RequestMethod.GET)
+	public ResponseEntity<InputStreamResource> extrato(@PathVariable Long id) {
+		Fatura fatura = faturaService.find(id);
+
+		return ResponseEntity
+				.ok()
+				.contentType(MediaType.APPLICATION_PDF)
+				.cacheControl(CacheControl.noCache())
+				.header("Content-Disposition", "attachment; filename=extrato.pdf")
+				.body(new InputStreamResource(faturaService.gerarExtrato(fatura)));
 	}
 
 	@ApiOperation(value = "Deletar uma fatura", tags = { "Faturas" })
