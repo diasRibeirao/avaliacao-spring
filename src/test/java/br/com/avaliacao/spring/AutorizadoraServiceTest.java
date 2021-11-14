@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 
-import br.com.avaliacao.spring.domain.dto.AutorizadoraDTO;
+import br.com.avaliacao.spring.domain.dto.TransacaoCartaoCreditoDTO;
 import br.com.avaliacao.spring.services.AutorizadoraService;
 import br.com.avaliacao.spring.services.exceptions.AutorizadoraException;
 
@@ -24,7 +24,7 @@ public class AutorizadoraServiceTest {
 	@Test
 	@DisplayName("Deve apresentar erro de cartao expirado")
 	public void deveApresentarErroCartaoExpirado() {
-		AutorizadoraDTO autorizacao = new AutorizadoraDTO();
+		TransacaoCartaoCreditoDTO autorizacao = new TransacaoCartaoCreditoDTO();
 		autorizacao.setCodigoSegurancaCartaoCredito("634");
 		autorizacao.setNomeImpresssoCartaoCredito("ANGELICA CRISTINA GARCIA");
 		autorizacao.setNumeroCartaoCredito("1609651850505841");
@@ -39,7 +39,7 @@ public class AutorizadoraServiceTest {
 	@Test
 	@DisplayName("Deve retornar apresentar erro de codigo de seguranca invaido ")
 	public void deveApresentarErroCodigoSegurancaInvalido() {
-		AutorizadoraDTO autorizacao = new AutorizadoraDTO();
+		TransacaoCartaoCreditoDTO autorizacao = new TransacaoCartaoCreditoDTO();
 		autorizacao.setCodigoSegurancaCartaoCredito("634");
 		autorizacao.setNomeImpresssoCartaoCredito("ANGELICA CRISTINA GARCIA");
 		autorizacao.setNumeroCartaoCredito("1609651850505841");
@@ -54,7 +54,7 @@ public class AutorizadoraServiceTest {
 	@Test
 	@DisplayName("Deve retornar apresentar erro de cartao invalido ")
 	public void deveApresentarErroDeCartaoInvalido() {
-		AutorizadoraDTO autorizacao = new AutorizadoraDTO();
+		TransacaoCartaoCreditoDTO autorizacao = new TransacaoCartaoCreditoDTO();
 		autorizacao.setCodigoSegurancaCartaoCredito("634");
 		autorizacao.setNomeImpresssoCartaoCredito("ANGELICA CRISTINA GARCIA");
 		autorizacao.setNumeroCartaoCredito("1609651850505841");
@@ -69,7 +69,7 @@ public class AutorizadoraServiceTest {
 	@Test
 	@DisplayName("Deve retornar autorizado ")
 	public void deveRetornarOK() {
-		AutorizadoraDTO autorizacao = new AutorizadoraDTO();
+		TransacaoCartaoCreditoDTO autorizacao = new TransacaoCartaoCreditoDTO();
 		autorizacao.setCodigoSegurancaCartaoCredito("634");
 		autorizacao.setNomeImpresssoCartaoCredito("ANGELICA CRISTINA GARCIA");
 		autorizacao.setNumeroCartaoCredito("1609651850505841");
