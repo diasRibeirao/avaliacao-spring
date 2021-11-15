@@ -32,7 +32,6 @@ public class CartaoCreditoServiceTest {
 	@DisplayName("Deve retornar todos os cartoes de credito ")
 	public void deveRetornarTodosOsCartoes() {
 		assertThat(cartaoService.findAll().size()).isBetween(3, 4);
-		//verificar o tamanho, é variavel
 	}
 	
 	@Test
