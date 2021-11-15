@@ -37,4 +37,5 @@ public class TransacaoCartaoCreditoDTO {
 		this.valorCompra = valorCompra;
 	}
 
+	
 }

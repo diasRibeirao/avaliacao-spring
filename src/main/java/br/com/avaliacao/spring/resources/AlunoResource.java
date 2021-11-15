@@ -24,7 +24,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
-@RequestMapping(value = "/v1/alunos")
+@RequestMapping(value = "/v1/alunos", produces = "application/json" )
 @Tag(name = "Alunos")
 public class AlunoResource {
 
