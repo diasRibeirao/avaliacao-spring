@@ -75,7 +75,9 @@ public class Transacao implements Serializable {
 		this.valor = objDTO.getValorCompra();
 	}
 
-	
+	public Integer getSituacao() {
+		return this.situacao == null ? 1 : this.situacao;
+	}
 	public String getDataFormatada() {
 		return Utils.dateToString(this.data);
 	}
