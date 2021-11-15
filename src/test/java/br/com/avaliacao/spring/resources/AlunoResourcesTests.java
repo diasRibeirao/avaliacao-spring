@@ -38,6 +38,28 @@ class AlunoResourcesTests {
 				.andExpect(jsonPath("$[0].nome", is("AARON FELIPE GRASSMANN")));
 	}
 
+	@Test
+	@WithMockUser(username = "fiap", password = "asd123qwe!",  authorities = { "ROLE_USER" })
+	void addAluno() throws Exception {
+		System.out.println("teste");
+		mvc.perform(MockMvcRequestBuilders.post("/v1/aluno")
+					.contentType(MediaType.APPLICATION_JSON)
+					.content("{\"matricula\":\"9998883 160-26\",\"nome\":\"Emerson Dias de Oliveira\"}")
+				)
+		        .andExpect(status().isOk());
+	}
+	
+	@Test
+	@WithMockUser(username = "fiap", password = "asd123qwe!",  authorities = { "ROLE_USER" })
+	void findAlunoById() throws Exception {
+		mvc.perform(MockMvcRequestBuilders.get("/v1/aluno/2")
+					.contentType(MediaType.APPLICATION_JSON)
+				)
+		        .andExpect(status().isOk())
+				.andExpect(jsonPath("$.matricula", is("8610833 160-26")))
+				.andExpect(jsonPath("$.nome", is("AARON PAPA DE MORAIS")));
+	}
+	
 	
 	
 	
