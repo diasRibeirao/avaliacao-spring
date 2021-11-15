@@ -24,5 +24,57 @@ Utilizamos em trechos do código o Lombok para diminuir a quantidade de codigo b
 Utilizamos nesse projeto o swagger para a criaçao da documentacao, o resultado pode ser conferido através da URL
 # Deploy
 Para esse projeto utilizamos o heroku como ferramenta para deploy, para acessar abrir a URL abaixo
-#
 https://fiap-avaliacao-spring.herokuapp.com/api/swagger-ui.html
+
+# Exemplo de transacoes
+avaliacao-spring-app/v1/cartoes/transacao:
+
+resultado OK
+    {
+        "numeroCartaoCredito": 1234567891234567,
+        "nomeImpresssoCartaoCredito": "Emerson Dias de Oliveira",
+        "vencimentoCartaoCredito": "02/2023",
+        "descricaoCompra": "roupa",
+        "valorCompra": 1000,
+        "codigoSegurancaCartaoCredito": 123
+    }
+   
+Resultado 404 - Cartao invalido
+    {
+        "numeroCartaoCredito": 1609651850505841,
+        "nomeImpresssoCartaoCredito": "ANGELICA CRISTINA GARCIA",
+        "vencimentoCartaoCredito": "07/2020",
+        "descricaoCompra": "Spotify",
+        "valorCompra": 1000,
+        "codigoSegurancaCartaoCredito": 634
+    }
+
+Erro limite excedido
+    {
+        "numeroCartaoCredito": 1234567891234567,
+        "nomeImpresssoCartaoCredito": "Emerson Dias de Oliveira",
+        "vencimentoCartaoCredito": "02/2023",
+        "descricaoCompra": "Apartamento",
+        "valorCompra": 100000,
+        "codigoSegurancaCartaoCredito": 123
+    }
+    
+Erro nome invalido
+    {
+        "numeroCartaoCredito": 1234567891234567,
+        "nomeImpresssoCartaoCredito": "Nome Invalido",
+        "vencimentoCartaoCredito": "02/2023",
+        "descricaoCompra": "Apartamento",
+        "valorCompra": 100000,
+        "codigoSegurancaCartaoCredito": 123
+    }
+    
+Erro codigo de seguranca invalido
+	    {
+        "numeroCartaoCredito": 1234567891234567,
+        "nomeImpresssoCartaoCredito": "Emerson Dias de Oliveira",
+        "vencimentoCartaoCredito": "02/2023",
+        "descricaoCompra": "Apartamento",
+        "valorCompra": 100000,
+        "codigoSegurancaCartaoCredito": 1213
+    }
