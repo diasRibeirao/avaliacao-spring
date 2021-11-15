@@ -24,6 +24,7 @@ Utilizamos em trechos do código o Lombok para diminuir a quantidade de codigo b
 Utilizamos nesse projeto o swagger para a criaçao da documentacao, o resultado pode ser conferido através da URL
 # Deploy
 Para esse projeto utilizamos o heroku como ferramenta para deploy, para acessar abrir a URL abaixo
+https://fiap-avaliacao-spring.herokuapp.com/api/swagger-ui.html
 
 # Exemplo de transacoes
 avaliacao-spring-app/v1/cartoes/transacao:

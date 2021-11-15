@@ -24,12 +24,12 @@ import br.com.avaliacao.spring.domain.dto.FaturaDTO;
 import br.com.avaliacao.spring.domain.dto.FaturaPagarDTO;
 import br.com.avaliacao.spring.domain.dto.converter.FaturaConverter;
 import br.com.avaliacao.spring.services.FaturaService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
-@Api(value = "Faturas", description = "APIs Faturas", tags = { "Faturas" })
 @RequestMapping(value = "/v1/faturas")
+@Tag(name = "Faturas")
 public class FaturaResource {
 
 	@Autowired
@@ -38,28 +38,28 @@ public class FaturaResource {
 	@Autowired
 	private FaturaConverter converter;
 
-	@ApiOperation(value = "Listar todos as faturas", tags = { "Faturas" })
+	@Operation(summary = "Listar todos as faturas")
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<FaturaDTO>> findAll() {
 		List<FaturaDTO> list = converter.Parse(faturaService.findAll());
 		return ResponseEntity.ok().body(list);
 	}
 
-	@ApiOperation(value = "Buscar a fatura pelo id", tags = { "Faturas" })
+	@Operation(summary = "Buscar a fatura pelo id")
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<FaturaDTO> find(@PathVariable Long id) {
 		FaturaDTO obj = converter.Parse(faturaService.find(id));
 		return ResponseEntity.ok().body(obj);
 	}
 
-	@ApiOperation(value = "Buscar faturas pelo id do cartão de drédito", tags = { "Faturas" })
+	@Operation(summary = "Buscar faturas pelo id do cartão de drédito")
 	@RequestMapping(value = "/cartoes/{cartaoCreditoId}", method = RequestMethod.GET)
 	public ResponseEntity<List<FaturaDTO>> findByCartaoCreditoId(@PathVariable Long cartaoCreditoId) {
 		List<FaturaDTO> list = converter.Parse(faturaService.findByCartaoCreditoId(cartaoCreditoId));
 		return ResponseEntity.ok().body(list);
 	}
 
-	@ApiOperation(value = "Adicionar uma fatura", tags = { "Faturas" })
+	@Operation(summary = "Adicionar uma fatura")
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<Void> insert(@Valid @RequestBody FaturaAdicionarDTO faturaAdicionarDTO) {
 		Fatura fatura = converter.ParseAdicionarDTO(faturaAdicionarDTO);
@@ -68,7 +68,7 @@ public class FaturaResource {
 		return ResponseEntity.created(uri).build();
 	}
 
-	@ApiOperation(value = "Atualizar uma fatura", tags = { "Faturas" })
+	@Operation(summary = "Atualizar uma fatura")
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<Void> update(@PathVariable Long id, @Valid @RequestBody FaturaAtualizarDTO faturaAtualizarDTO) {
 		Fatura obj = converter.ParseFaturaAtualizarDTO(faturaAtualizarDTO);
@@ -77,7 +77,7 @@ public class FaturaResource {
 		return ResponseEntity.noContent().build();
 	}
 
-	@ApiOperation(value = "Pagar uma fatura", tags = { "Faturas" })
+	@Operation(summary = "Pagar uma fatura")
 	@RequestMapping(value = "/pagar/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<String> pagar(@PathVariable Long id, @Valid @RequestBody FaturaPagarDTO faturaPagarDTO) {
 		Fatura fatura = faturaService.find(id);
@@ -85,7 +85,7 @@ public class FaturaResource {
 		return ResponseEntity.ok().body("Fatura paga com sucesso.");
 	}
 	
-	@ApiOperation(value = "Gerar extrato de uma fatura", tags = { "Faturas" })
+	@Operation(summary = "Gerar extrato de uma fatura")
 	@RequestMapping(value = "/extrato/{id}", method = RequestMethod.GET)
 	public ResponseEntity<InputStreamResource> extrato(@PathVariable Long id) {
 		Fatura fatura = faturaService.find(id);
@@ -98,7 +98,7 @@ public class FaturaResource {
 				.body(new InputStreamResource(faturaService.gerarExtrato(fatura)));
 	}
 
-	@ApiOperation(value = "Deletar uma fatura", tags = { "Faturas" })
+	@Operation(summary = "Deletar uma fatura")
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Void> delete(@PathVariable Long id) {
 		faturaService.delete(id);

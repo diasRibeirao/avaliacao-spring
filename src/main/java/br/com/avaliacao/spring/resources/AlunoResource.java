@@ -20,12 +20,12 @@ import br.com.avaliacao.spring.domain.dto.AlunoAtualizarDTO;
 import br.com.avaliacao.spring.domain.dto.AlunoDTO;
 import br.com.avaliacao.spring.domain.dto.converter.AlunoConverter;
 import br.com.avaliacao.spring.services.AlunoService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
-@Api(value = "Alunos", description = "APIs Alunos", tags = { "Alunos" })
 @RequestMapping(value = "/v1/alunos")
+@Tag(name = "Alunos")
 public class AlunoResource {
 
 	@Autowired
@@ -34,21 +34,21 @@ public class AlunoResource {
 	@Autowired
 	private AlunoConverter converter;
 
-	@ApiOperation(value = "Listar todos os alunos", tags = { "Alunos" })
+	@Operation(summary = "Listar todos os alunos")
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<AlunoDTO>> findAll() {
 		List<AlunoDTO> list = converter.Parse(alunoService.findAll());
 		return ResponseEntity.ok().body(list);
 	} 
 
-	@ApiOperation(value = "Buscar o aluno pelo id", tags = { "Alunos" })
+	@Operation(summary = "Buscar o aluno pelo id")
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<AlunoDTO> find(@PathVariable Long id) {
 		AlunoDTO obj = converter.Parse(alunoService.find(id));
 		return ResponseEntity.ok().body(obj);
 	}
 
-	@ApiOperation(value = "Adicionar um aluno", tags = { "Alunos" })
+	@Operation(summary = "Adicionar um aluno")
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<Void> insert(@Valid @RequestBody AlunoAdicionarDTO alunoAdicionarDTO) {
 		Aluno aluno = converter.ParseAdicionarDTO(alunoAdicionarDTO);
@@ -57,7 +57,7 @@ public class AlunoResource {
 		return ResponseEntity.created(uri).build();
 	}
 
-	@ApiOperation(value = "Atualizar um aluno", tags = { "Alunos" })
+	@Operation(summary = "Atualizar um aluno")
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<Void> update(@Valid @RequestBody AlunoAtualizarDTO objDto, @PathVariable Long id) {
 		Aluno obj = converter.ParseAtualizarDTO(objDto);
@@ -66,7 +66,7 @@ public class AlunoResource {
 		return ResponseEntity.noContent().build();
 	}
 
-	@ApiOperation(value = "Deletar um aluno", tags = { "Alunos" })
+	@Operation(summary = "Deletar um aluno")
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Void> delete(@PathVariable Long id) {
 		alunoService.delete(id);
