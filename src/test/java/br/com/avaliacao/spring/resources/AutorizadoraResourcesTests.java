@@ -5,6 +5,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.math.BigDecimal;
+import java.time.YearMonth;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -15,35 +18,42 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
+import com.fasterxml.jackson.databind.SerializationFeature;
+
+import br.com.avaliacao.spring.domain.dto.TransacaoCartaoCreditoDTO;
+
 @SpringBootTest
 @AutoConfigureMockMvc
-class FaturaResourcesTests {
+class AutorizadoraResourcesTests {
 
 	@Autowired
     private MockMvc mvc;
 	
 	@Test
     void testSecurity() throws Exception {
-		mvc.perform(get("/v1/faturas")).andExpect(status().is(HttpStatus.UNAUTHORIZED.value()));
+		mvc.perform(get("/v1/alunos")).andExpect(status().is(HttpStatus.UNAUTHORIZED.value()));
     }
-	
+
 	@Test
 	@WithMockUser(username = "fiap", password = "asd123qwe!",  authorities = { "ROLE_USER" })
-	void listarFatura() throws Exception {
-		mvc.perform(MockMvcRequestBuilders.get("/v1/faturas")
+	void autorizar() throws Exception {
+		TransacaoCartaoCreditoDTO autorizacao = new TransacaoCartaoCreditoDTO(
+				"1234567891234567","Emerson Dias de Oliveira",YearMonth.of(2023, 02),
+				"123","Roupas",new BigDecimal(1000)
+				);
+	    ObjectMapper mapper = new ObjectMapper();
+	    mapper.findAndRegisterModules();
+	    mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
+	    ObjectWriter ow = mapper.writer().withDefaultPrettyPrinter();
+	    String requestJson=ow.writeValueAsString(autorizacao );
+		mvc.perform(MockMvcRequestBuilders.post("/v1/cartoes/transacao")
 					.contentType(MediaType.APPLICATION_JSON)
+				       .content(requestJson)
 				)
 				.andExpect(status().isOk())
-				.andExpect(jsonPath("$[0].dataFechamento", is("10/12/2021 03:00")));
-	}
-	@Test
-	@WithMockUser(username = "fiap", password = "asd123qwe!",  authorities = { "ROLE_USER" })
-	void listarUmaFatura() throws Exception {
-		mvc.perform(MockMvcRequestBuilders.get("/v1/faturas/2")
-					.contentType(MediaType.APPLICATION_JSON)
-				)
-				.andExpect(status().isOk())
-				.andExpect(jsonPath("$.dataFechamento", is("10/12/2021 03:00")));
+				.andExpect(jsonPath("$.descricao", is("Roupas")));
 	}
 	
 	
