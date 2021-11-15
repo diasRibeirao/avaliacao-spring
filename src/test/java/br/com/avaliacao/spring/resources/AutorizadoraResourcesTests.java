@@ -33,7 +33,7 @@ class AutorizadoraResourcesTests {
 	
 	@Test
     void testSecurity() throws Exception {
-		mvc.perform(get("/v1/alunos")).andExpect(status().is(HttpStatus.UNAUTHORIZED.value()));
+		mvc.perform(get("/v1/cartoes/transacao")).andExpect(status().is(HttpStatus.UNAUTHORIZED.value()));
     }
 
 	@Test
